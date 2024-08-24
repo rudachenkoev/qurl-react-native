@@ -1,3 +1,4 @@
+import GoogleLogo from '@/assets/icons/google.png'
 import Logo from '@/assets/images/favicon.png'
 import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
@@ -26,12 +27,11 @@ const SignIn = () => {
               label="Email"
               placeholder="Enter your email"
               textContentType="emailAddress"
-              value={form.email}
               inputMode="email"
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect={false}
-              enterKeyHint="next"
+              value={form.email}
               onChangeText={value => setForm({ ...form, email: value })}
             />
             <CustomInput
@@ -39,14 +39,20 @@ const SignIn = () => {
               placeholder="Enter your password"
               textContentType="password"
               secureTextEntry={true}
-              appendIcon={Logo}
-              value={form.password}
+              appendIcon={{ icon: 'eye-outline', style: 'ml-3' }}
               autoCapitalize="none"
               autoComplete="current-password"
               autoCorrect={false}
+              value={form.password}
               onChangeText={value => setForm({ ...form, password: value })}
             />
             <CustomButton label="Sign in" onPress={() => alert('Button Pressed!')} />
+            <CustomButton
+              label="Continue with Google"
+              variant="outlined"
+              prependIcon={{ source: GoogleLogo, style: 'mr-3' }}
+              onPress={() => alert('Button Pressed!')}
+            />
           </View>
         </View>
       </SafeAreaView>

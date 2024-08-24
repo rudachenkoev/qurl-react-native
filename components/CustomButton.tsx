@@ -1,5 +1,5 @@
+import CustomIcon from '@/components/CustomIcon'
 import { ColorType, CustomButtonProps, VariantType } from '@/types/type'
-import Ionicons from '@expo/vector-icons/Ionicons'
 import { styled } from 'nativewind'
 import { Pressable, Text } from 'react-native'
 
@@ -28,20 +28,13 @@ const StyledPressable = styled(
   Pressable,
   'w-fit flex-row items-center justify-center rounded-lg px-4 py-2 transition disabled:opacity-50'
 )
-const StyledIonicons = styled(Ionicons)
 const StyledText = styled(Text)
 
 const CustomButton = ({
   label = '',
   labelStyle = 'text-lg font-medium',
-  prependIcon = null,
-  prependIconColor = '#000',
-  prependIconSize = 24,
-  prependIconStyle = 'mr-3',
-  appendIcon = null,
-  appendIconColor = '#000',
-  appendIconSize = 24,
-  appendIconStyle = 'ml-3',
+  prependIcon,
+  appendIcon,
   variant = 'default',
   color = 'primary',
   className = '',
@@ -50,18 +43,9 @@ const CustomButton = ({
   const { wrapper: wrapperColorClasses, label: labelColorClasses } = getColorStyle(color, variant)
   return (
     <StyledPressable className={`${wrapperColorClasses} ${className}`} {...props}>
-      {prependIcon && (
-        <StyledIonicons
-          name={prependIcon}
-          color={prependIconColor}
-          size={prependIconSize}
-          className={prependIconStyle}
-        />
-      )}
+      {prependIcon && <CustomIcon {...prependIcon} />}
       <StyledText className={`${labelColorClasses} ${labelStyle}`}>{label}</StyledText>
-      {appendIcon && (
-        <StyledIonicons name={appendIcon} color={appendIconColor} size={appendIconSize} className={appendIconStyle} />
-      )}
+      {appendIcon && <CustomIcon {...appendIcon} />}
     </StyledPressable>
   )
 }

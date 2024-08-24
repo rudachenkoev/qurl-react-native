@@ -1,14 +1,17 @@
+import CustomIcon from '@/components/CustomIcon'
 import { CustomInputProps } from '@/types/type'
-import Ionicons from '@expo/vector-icons/Ionicons'
-import { Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, Text, TextInput, View } from 'react-native'
+import { styled } from 'nativewind'
+import { Keyboard, KeyboardAvoidingView, Platform, Pressable, Text, TextInput, View } from 'react-native'
+
+const StyledView = styled(View)
+const StyledText = styled(Text)
+const StyledTextInput = styled(TextInput)
 
 const CustomInput = ({
-  label,
-  labelStyle,
+  label = '',
+  labelStyle = 'mb-1 px-2 text-sm',
   prependIcon,
-  prependIconStyle,
   appendIcon,
-  appendIconStyle,
   containerStyle,
   inputStyle,
   placeholder,
@@ -17,21 +20,19 @@ const CustomInput = ({
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Pressable onPress={() => Keyboard.dismiss()}>
-        <View>
-          <Text className={`mb-1 px-2 text-sm ${labelStyle}`}>{label}</Text>
-          <View
-            className={`flex w-full flex-row items-center justify-start rounded-lg bg-neutral-100 p-4 ${containerStyle}`}
-          >
-            {prependIcon && <Image source={prependIcon} className={`mr-3 h-6 w-6 ${prependIconStyle}`} />}
-            <TextInput
-              className={`flex-1 ${inputStyle}`}
-              placeholder={placeholder || label}
-              placeholderTextColor="#94a3b8"
-              {...props}
-            />
-            {appendIcon && <Ionicons name="eye" size={24} className={`ml-3 ${appendIconStyle}`} />}
-          </View>
-        </View>
+        <StyledText className={labelStyle}>{label}</StyledText>
+        <StyledView
+          className={`flex w-full flex-row items-center justify-start rounded-lg bg-neutral-100 p-4 ${containerStyle}`}
+        >
+          {prependIcon && <CustomIcon {...prependIcon} />}
+          <StyledTextInput
+            className={`flex-1 ${inputStyle}`}
+            placeholder={placeholder || label}
+            placeholderTextColor="#b0b0b0"
+            {...props}
+          />
+          {appendIcon && <CustomIcon {...appendIcon} />}
+        </StyledView>
       </Pressable>
     </KeyboardAvoidingView>
   )
