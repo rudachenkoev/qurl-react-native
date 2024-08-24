@@ -1,38 +1,40 @@
 import CustomIcon from '@/components/CustomIcon'
 import { styled } from 'nativewind'
-import { useState } from 'react'
-import { Animated, TouchableOpacity, View } from 'react-native'
+import { useMemo } from 'react'
+import { Animated, TouchableOpacity, View, ViewStyle } from 'react-native'
+
+interface PasswordVisibilityProps {
+  value: boolean
+  onChangeValue: (newValue: boolean) => void
+}
 
 const StyledView = styled(View)
 
-const PasswordVisibility = ({ value, onChangeValue }) => {
-  const [crossedOut, setCrossedOut] = useState(value)
-  const [lineWidth] = useState(new Animated.Value(0))
+const PasswordVisibility = ({ value, onChangeValue }: PasswordVisibilityProps) => {
+  const lineWidth = useMemo(() => new Animated.Value(value ? 28 : 0), [value])
 
   const toggleCrossedOut = () => {
-    const changedValue = !crossedOut
-    setCrossedOut(changedValue)
-    onChangeValue(changedValue)
+    onChangeValue(!value)
     Animated.timing(lineWidth, {
-      toValue: crossedOut ? 0 : 28,
+      toValue: value ? 0 : 28,
       duration: 80,
       useNativeDriver: false
     }).start()
   }
 
+  const lineStyle = {
+    position: 'absolute',
+    width: lineWidth,
+    height: 2,
+    backgroundColor: 'black',
+    transform: [{ rotate: '45deg' }]
+  } as Animated.AnimatedProps<ViewStyle>
+
   return (
     <TouchableOpacity onPress={toggleCrossedOut}>
       <StyledView className="flex items-center justify-center">
         <CustomIcon icon="eye-outline" />
-        <Animated.View
-          style={{
-            position: 'absolute',
-            width: lineWidth,
-            height: 2,
-            backgroundColor: 'black',
-            transform: [{ rotate: '45deg' }]
-          }}
-        />
+        <Animated.View style={lineStyle} />
       </StyledView>
     </TouchableOpacity>
   )
