@@ -1,5 +1,6 @@
 import Logo from '@/assets/images/favicon.png'
-import InputField from '@/components/InputField'
+import CustomButton from '@/components/CustomButton'
+import CustomInput from '@/components/CustomInput'
 import { useState } from 'react'
 import { Image, SafeAreaView, Text, View } from 'react-native'
 
@@ -21,7 +22,7 @@ const SignIn = () => {
             <Text className="text-center text-white">Create an account or log in to explore about our app</Text>
           </View>
           <View className="mt-8 rounded-lg bg-white p-4 shadow" style={{ gap: 12 }}>
-            <InputField
+            <CustomInput
               label="Email"
               placeholder="Enter your email"
               textContentType="emailAddress"
@@ -30,10 +31,10 @@ const SignIn = () => {
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect={false}
-              returnKeyType="next"
+              enterKeyHint="next"
               onChangeText={value => setForm({ ...form, email: value })}
             />
-            <InputField
+            <CustomInput
               label="Password"
               placeholder="Enter your password"
               textContentType="password"
@@ -45,6 +46,7 @@ const SignIn = () => {
               autoCorrect={false}
               onChangeText={value => setForm({ ...form, password: value })}
             />
+            <CustomButton label="Sign in" onPress={() => alert('Button Pressed!')} />
           </View>
         </View>
       </SafeAreaView>
