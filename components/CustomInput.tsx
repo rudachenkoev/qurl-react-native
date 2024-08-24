@@ -1,6 +1,8 @@
 import CustomIcon from '@/components/CustomIcon'
+import PasswordVisibility from '@/components/PasswordVisibility'
 import { CustomInputProps } from '@/types/type'
 import { styled } from 'nativewind'
+import { useState } from 'react'
 import { Keyboard, KeyboardAvoidingView, Platform, Pressable, Text, TextInput, View } from 'react-native'
 
 const StyledView = styled(View)
@@ -15,8 +17,18 @@ const CustomInput = ({
   containerStyle,
   inputStyle,
   placeholder,
+  textContentType,
+  secureTextEntry = false,
   ...props
 }: CustomInputProps) => {
+  const [isSecure, setIsSecure] = useState(secureTextEntry)
+
+  const renderAppendIcon = () => {
+    if (textContentType === 'password') return <PasswordVisibility value={isSecure} onChangeValue={setIsSecure} />
+    else if (appendIcon) return <CustomIcon {...appendIcon} />
+    else return null
+  }
+
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Pressable onPress={() => Keyboard.dismiss()}>
@@ -29,9 +41,11 @@ const CustomInput = ({
             className={`flex-1 ${inputStyle}`}
             placeholder={placeholder || label}
             placeholderTextColor="#b0b0b0"
+            textContentType={textContentType}
+            secureTextEntry={isSecure}
             {...props}
           />
-          {appendIcon && <CustomIcon {...appendIcon} />}
+          {renderAppendIcon()}
         </StyledView>
       </Pressable>
     </KeyboardAvoidingView>

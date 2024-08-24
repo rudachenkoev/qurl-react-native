@@ -41,7 +41,6 @@ const SignIn = () => {
               secureTextEntry={true}
               appendIcon={{ icon: 'eye-outline', style: 'ml-3' }}
               autoCapitalize="none"
-              autoComplete="current-password"
               autoCorrect={false}
               value={form.password}
               onChangeText={value => setForm({ ...form, password: value })}
