@@ -3,6 +3,7 @@ import { ImageSourcePropType, TextInputProps, TouchableOpacityProps } from 'reac
 
 export type VariantType = 'default' | 'outlined'
 export type ColorType = 'primary' | 'secondary' | 'success' | 'error'
+export type LanguageType = 'en' | 'uk'
 
 declare interface CustomInputProps extends TextInputProps {
   label: string
