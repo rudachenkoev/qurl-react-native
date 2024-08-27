@@ -22,8 +22,8 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
       { left: 32, top: 30, size: 5 },
       { left: 12, top: 36, size: 7 },
       { left: 85, top: 50, size: 4 },
-      { left: 23, top: 60, size: 6 },
-      { left: 75, top: 74, size: 9 }
+      { left: 22, top: 55, size: 6 },
+      { left: 75, top: 70, size: 9 }
     ],
     []
   )
@@ -39,7 +39,9 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
     setTopLayoutSize({ width, height })
   }, [])
 
-  const convertPercentageToPixels = (percent: number): number => (topLayoutSize.width * percent) / 100
+  const convertPercentageToPixels = (percent: number, dimension: 'width' | 'height'): number => {
+    return (topLayoutSize[dimension] * percent) / 100
+  }
 
   // Render grid lines
   const numberOfLines = 10
@@ -71,8 +73,8 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
         {dots.map((dot, index) => (
           <GlowingDot
             key={index}
-            left={convertPercentageToPixels(dot.left)}
-            top={convertPercentageToPixels(dot.top)}
+            left={convertPercentageToPixels(dot.left, 'width')}
+            top={convertPercentageToPixels(dot.top, 'height')}
             size={dot.size}
             delay={index * 500}
           />
