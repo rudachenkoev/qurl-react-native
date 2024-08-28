@@ -50,14 +50,14 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
       <>
         {Array.from({ length: numberOfLines }).map((_, index) => (
           <StyledView
-            key={`h-${index}`}
+            key={`horizontal-grid-line-${index}`}
             className="absolute h-px w-full bg-white/20"
             style={{ top: `${(index / numberOfLines) * 100}%` }}
           />
         ))}
         {Array.from({ length: numberOfLines }).map((_, index) => (
           <StyledView
-            key={`v-${index}`}
+            key={`vertical-grid-line-${index}`}
             className="absolute h-full w-px bg-white/20"
             style={{ left: `${(index / numberOfLines) * 100}%` }}
           />
@@ -68,11 +68,11 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
 
   return (
     <StyledView className="flex-1">
-      <StyledView className="relative flex-1 bg-primary-500" onLayout={handleLayout}>
+      <StyledView className="relative flex-1 bg-primary-500 dark:bg-[#262632]" onLayout={handleLayout}>
         {renderGridLines}
         {dots.map((dot, index) => (
           <GlowingDot
-            key={index}
+            key={`glowing-dot-${index}`}
             left={convertPercentageToPixels(dot.left, 'width')}
             top={convertPercentageToPixels(dot.top, 'height')}
             size={dot.size}
@@ -80,7 +80,7 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
           />
         ))}
       </StyledView>
-      <StyledView className="flex-1 bg-secondary-50" />
+      <StyledView className="flex-1 bg-secondary-50 dark:bg-[#3b3c51]" />
       <StyledSafeAreaView className="absolute inset-x-0 top-0">
         <StyledView className="p-8">
           <StyledView className="flex items-center">
@@ -88,7 +88,7 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
             <StyledText className="my-6 text-center text-4xl font-bold text-white">{title}</StyledText>
             <StyledText className="text-center text-white">{subtitle}</StyledText>
           </StyledView>
-          <StyledView className="mt-8 rounded-lg bg-white p-4 shadow" style={{ gap: 12 }}>
+          <StyledView className="mt-8 p-4 rounded-lg bg-white dark:bg-neutral-700 shadow" style={{ gap: 12 }}>
             {children}
           </StyledView>
         </StyledView>
