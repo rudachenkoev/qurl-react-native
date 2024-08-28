@@ -80,7 +80,7 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
           />
         ))}
       </StyledView>
-      <StyledView className="flex-1 bg-secondary-50 dark:bg-[#3b3c51]" />
+      <StyledView className="flex-1 bg-secondary-50" />
       <StyledSafeAreaView className="absolute inset-x-0 top-0">
         <StyledView className="p-8">
           <StyledView className="flex items-center">
@@ -88,7 +88,7 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
             <StyledText className="my-6 text-center text-4xl font-bold text-white">{title}</StyledText>
             <StyledText className="text-center text-white">{subtitle}</StyledText>
           </StyledView>
-          <StyledView className="mt-8 p-4 rounded-lg bg-white dark:bg-neutral-700 shadow" style={{ gap: 12 }}>
+          <StyledView className="mt-8 rounded-lg bg-white p-4 shadow" style={{ gap: 12 }}>
             {children}
           </StyledView>
         </StyledView>

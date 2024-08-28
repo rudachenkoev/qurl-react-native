@@ -3,27 +3,45 @@ import AuthWrapper from '@/components/AuthWrapper'
 import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
 import { i18n } from '@/libs/i18n'
-import { useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+
+interface SignInFormData {
+  email: string
+  password: string
+}
 
 const SignIn = () => {
-  const [form, setForm] = useState({
-    email: '',
-    password: ''
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<SignInFormData>({
+    defaultValues: {
+      email: '',
+      password: ''
+    }
   })
+  const onSubmit: SubmitHandler<SignInFormData> = data => console.log(data)
 
   return (
     <AuthWrapper title={i18n.t('signInToYourAccount')} subtitle={i18n.t('createAccountOrLogIn')}>
       <CustomInput
+        name="email"
+        control={control}
+        rules={{ required: true }}
+        error={errors.email}
         label={i18n.t('email')}
         placeholder={i18n.t('enterYourEmail')}
         textContentType="emailAddress"
         inputMode="email"
         autoCapitalize="none"
         autoCorrect={false}
-        value={form.email}
-        onChangeText={value => setForm({ ...form, email: value })}
       />
       <CustomInput
+        name="password"
+        control={control}
+        rules={{ required: true }}
+        error={errors.password}
         label={i18n.t('password')}
         placeholder={i18n.t('enterYourPassword')}
         textContentType="password"
@@ -31,10 +49,8 @@ const SignIn = () => {
         appendIcon={{ icon: 'eye-outline', style: 'ml-3' }}
         autoCapitalize="none"
         autoCorrect={false}
-        value={form.password}
-        onChangeText={value => setForm({ ...form, password: value })}
       />
-      <CustomButton label={i18n.t('signIn')} onPress={() => alert('Button Pressed!')} />
+      <CustomButton label={i18n.t('signIn')} onPress={handleSubmit(onSubmit)} />
       <CustomButton
         label={i18n.t('signInWithGoogle')}
         variant="outlined"
