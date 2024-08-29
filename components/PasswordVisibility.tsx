@@ -11,6 +11,7 @@ interface PasswordVisibilityProps {
 const StyledView = styled(View)
 
 const PasswordVisibility = ({ value, onChangeValue }: PasswordVisibilityProps) => {
+  const iconColor = '#737373'
   const lineWidth = useMemo(() => new Animated.Value(value ? 28 : 0), [value])
 
   const toggleCrossedOut = () => {
@@ -25,15 +26,15 @@ const PasswordVisibility = ({ value, onChangeValue }: PasswordVisibilityProps) =
   const lineStyle = {
     position: 'absolute',
     width: lineWidth,
-    height: 2,
-    backgroundColor: 'black',
+    height: 1.5,
+    backgroundColor: iconColor,
     transform: [{ rotate: '45deg' }]
   } as Animated.AnimatedProps<ViewStyle>
 
   return (
     <TouchableOpacity onPress={toggleCrossedOut}>
-      <StyledView className="flex items-center justify-center">
-        <CustomIcon icon="eye-outline" />
+      <StyledView className="flex items-center justify-center ml-3">
+        <CustomIcon icon="eye-outline" color={iconColor} />
         <Animated.View style={lineStyle} />
       </StyledView>
     </TouchableOpacity>

@@ -50,7 +50,6 @@ const SignIn = () => {
         placeholder={i18n.t('enterYourPassword')}
         textContentType="password"
         secureTextEntry={true}
-        appendIcon={{ icon: 'eye-outline', style: 'ml-3' }}
         autoCapitalize="none"
         autoCorrect={false}
       />
