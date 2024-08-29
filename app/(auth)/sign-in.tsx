@@ -4,7 +4,13 @@ import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
 import { i18n } from '@/libs/i18n'
 import { validateEmail } from '@/utils/validation'
+import { Link } from 'expo-router'
+import { styled } from 'nativewind'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { Text } from 'react-native'
+
+const StyledLink = styled(Link)
+const StyledText = styled(Text)
 
 interface SignInFormData {
   email: string
@@ -60,6 +66,10 @@ const SignIn = () => {
         prependIcon={{ source: GoogleLogo, style: 'mr-3' }}
         onPress={() => alert('Button Pressed!')}
       />
+      <StyledLink href="/sign-up" className="mt-3 text-center text-sm text-neutral-950 dark:text-neutral-100">
+        {i18n.t('dontHaveAnAccount')}{' '}
+        <StyledText className="text-primary-500 dark:text-slate-950">{i18n.t('signUp')}</StyledText>
+      </StyledLink>
     </AuthWrapper>
   )
 }

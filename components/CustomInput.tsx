@@ -46,7 +46,7 @@ const CustomInput = ({
         ) : null}
 
         <StyledView
-          className={`px-4 h-12 w-full flex flex-row items-center justify-start rounded-lg bg-neutral-100 dark:bg-zinc-800 ${containerStyle}`}
+          className={`flex h-12 w-full flex-row items-center justify-start rounded-lg bg-neutral-100 px-4 dark:bg-zinc-800 ${containerStyle}`}
         >
           {prependIcon && <CustomIcon {...prependIcon} />}
 

@@ -5,10 +5,14 @@
   },
   "signInToYourAccount": "Sign in to your Account",
   "createAccountOrLogIn": "Create an account or log in to explore about our app",
+  "createAnAccountToContinue": "Create an account to continue!",
   "email": "Email",
   "enterYourEmail": "Enter your email",
   "password": "Password",
   "enterYourPassword": "Enter your password",
   "signIn": "Sign in",
-  "signInWithGoogle": "Continue with Google"
+  "signUp": "Sign up",
+  "signInWithGoogle": "Continue with Google",
+  "dontHaveAnAccount": "Don't have an account?",
+  "alreadyHaveAnAccount": "Already have an account?"
 }

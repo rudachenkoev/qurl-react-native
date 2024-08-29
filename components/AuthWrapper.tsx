@@ -53,7 +53,7 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
             index > 0 && (
               <StyledView
                 key={`horizontal-grid-line-${index}`}
-                className="absolute h-px w-full bg-white/20"
+                className="absolute h-px w-full bg-neutral-100/20"
                 style={{ top: `${(index / numberOfLines) * 100}%` }}
               />
             )
@@ -63,7 +63,7 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
             index > 0 && (
               <StyledView
                 key={`vertical-grid-line-${index}`}
-                className="absolute h-full w-px bg-white/20"
+                className="absolute h-full w-px bg-neutral-100/20"
                 style={{ left: `${(index / numberOfLines) * 100}%` }}
               />
             )
@@ -94,7 +94,10 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
             <StyledText className="my-6 text-center text-4xl font-bold text-white">{title}</StyledText>
             <StyledText className="text-center text-white">{subtitle}</StyledText>
           </StyledView>
-          <StyledView className="mt-8 rounded-lg bg-white p-4 shadow dark:bg-zinc-700" style={{ gap: 16 }}>
+          <StyledView
+            className="mt-8 rounded-lg bg-white p-4 shadow dark:bg-zinc-700 dark:shadow-neutral-800"
+            style={{ gap: 16 }}
+          >
             {children}
           </StyledView>
         </StyledView>
