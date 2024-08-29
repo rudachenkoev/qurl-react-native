@@ -7,7 +7,7 @@ export type ColorType = 'primary' | 'secondary' | 'success' | 'error'
 export type LanguageType = 'en' | 'uk'
 
 declare interface CustomInputProps extends TextInputProps {
-  label: string
+  label?: string
   appendIcon?: CustomIconProps
   prependIcon?: CustomIconProps
   // Validation

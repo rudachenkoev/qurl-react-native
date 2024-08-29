@@ -22,7 +22,7 @@ const CustomInput = ({
   containerStyle,
   inputStyle,
   placeholder,
-  textContentType,
+  textContentType = 'none',
   secureTextEntry = false,
   rules = {},
   errorStyle,
@@ -39,11 +39,13 @@ const CustomInput = ({
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Pressable onPress={() => Keyboard.dismiss()}>
-        <StyledText className={`mb-1 px-2 text-sm ${labelStyle}`}>{label}</StyledText>
+        {label ? <StyledText className={`mb-1 px-2 text-sm ${labelStyle}`}>{label}</StyledText> : null}
+
         <StyledView
           className={`flex w-full flex-row items-center justify-start rounded-lg bg-neutral-100 p-4 ${containerStyle}`}
         >
           {prependIcon && <CustomIcon {...prependIcon} />}
+
           <Controller
             control={control}
             name={name}
@@ -62,8 +64,10 @@ const CustomInput = ({
               />
             )}
           />
+
           {renderAppendIcon()}
         </StyledView>
+
         {error && <Message type="error" message={error} messageStyle="mt-1" />}
       </Pressable>
     </KeyboardAvoidingView>
