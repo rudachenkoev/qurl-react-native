@@ -39,10 +39,14 @@ const CustomInput = ({
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Pressable onPress={() => Keyboard.dismiss()}>
-        {label ? <StyledText className={`mb-1 px-2 text-sm ${labelStyle}`}>{label}</StyledText> : null}
+        {label ? (
+          <StyledText className={`mb-1 px-2 text-sm text-neutral-950 dark:text-neutral-100 ${labelStyle}`}>
+            {label}
+          </StyledText>
+        ) : null}
 
         <StyledView
-          className={`flex w-full flex-row items-center justify-start rounded-lg bg-neutral-100 p-4 ${containerStyle}`}
+          className={`px-4 h-12 w-full flex flex-row items-center justify-start rounded-lg bg-neutral-100 dark:bg-zinc-800 ${containerStyle}`}
         >
           {prependIcon && <CustomIcon {...prependIcon} />}
 
@@ -52,7 +56,7 @@ const CustomInput = ({
             rules={rules}
             render={({ field: { onChange, onBlur, value } }) => (
               <StyledTextInput
-                className={`flex-1 ${inputStyle}`}
+                className={`h-full flex-1 ${inputStyle}`}
                 placeholder={placeholder || label}
                 placeholderTextColor="#b0b0b0"
                 textContentType={textContentType}

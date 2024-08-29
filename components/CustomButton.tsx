@@ -5,19 +5,22 @@ import { Pressable, Text } from 'react-native'
 
 const colorStyles: Record<ColorType, Record<VariantType, { wrapper: string; label: string }>> = {
   primary: {
-    default: { wrapper: 'bg-primary-500', label: 'text-white' },
-    outlined: { wrapper: 'bg-transparent border border-primary-500', label: 'text-primary-500' }
+    default: { wrapper: 'bg-primary-500 dark:bg-slate-950', label: 'text-neutral-100' },
+    outlined: {
+      wrapper: 'bg-transparent border border-primary-500 dark:border-neutral-100',
+      label: 'text-primary-500 dark:text-neutral-100'
+    }
   },
   secondary: {
-    default: { wrapper: 'bg-secondary-500', label: 'text-white' },
+    default: { wrapper: 'bg-secondary-500', label: 'text-neutral-100' },
     outlined: { wrapper: 'bg-transparent border border-secondary-500', label: 'text-secondary-500' }
   },
   success: {
-    default: { wrapper: 'bg-success-500', label: 'text-white' },
+    default: { wrapper: 'bg-success-500', label: 'text-neutral-100' },
     outlined: { wrapper: 'bg-transparent border border-success-500', label: 'text-success-500' }
   },
   error: {
-    default: { wrapper: 'bg-error-500', label: 'text-white' },
+    default: { wrapper: 'bg-error-500', label: 'text-neutral-100' },
     outlined: { wrapper: 'bg-transparent border border-error-500', label: 'text-error-500' }
   }
 }

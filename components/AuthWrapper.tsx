@@ -44,31 +44,37 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
   }
 
   // Render grid lines
-  const numberOfLines = 10
+  const numberOfLines = 8
   const renderGridLines = useMemo(() => {
     return (
       <>
-        {Array.from({ length: numberOfLines }).map((_, index) => (
-          <StyledView
-            key={`horizontal-grid-line-${index}`}
-            className="absolute h-px w-full bg-white/20"
-            style={{ top: `${(index / numberOfLines) * 100}%` }}
-          />
-        ))}
-        {Array.from({ length: numberOfLines }).map((_, index) => (
-          <StyledView
-            key={`vertical-grid-line-${index}`}
-            className="absolute h-full w-px bg-white/20"
-            style={{ left: `${(index / numberOfLines) * 100}%` }}
-          />
-        ))}
+        {Array.from({ length: numberOfLines }).map(
+          (_, index) =>
+            index > 0 && (
+              <StyledView
+                key={`horizontal-grid-line-${index}`}
+                className="absolute h-px w-full bg-white/20"
+                style={{ top: `${(index / numberOfLines) * 100}%` }}
+              />
+            )
+        )}
+        {Array.from({ length: numberOfLines }).map(
+          (_, index) =>
+            index > 0 && (
+              <StyledView
+                key={`vertical-grid-line-${index}`}
+                className="absolute h-full w-px bg-white/20"
+                style={{ left: `${(index / numberOfLines) * 100}%` }}
+              />
+            )
+        )}
       </>
     )
   }, [numberOfLines])
 
   return (
     <StyledView className="flex-1">
-      <StyledView className="relative flex-1 bg-primary-500 dark:bg-[#262632]" onLayout={handleLayout}>
+      <StyledView className="relative flex-1 bg-primary-500 dark:bg-slate-950" onLayout={handleLayout}>
         {renderGridLines}
         {dots.map((dot, index) => (
           <GlowingDot
@@ -80,7 +86,7 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
           />
         ))}
       </StyledView>
-      <StyledView className="flex-1 bg-secondary-50" />
+      <StyledView className="flex-1 bg-secondary-50 dark:bg-slate-950" />
       <StyledSafeAreaView className="absolute inset-x-0 top-0">
         <StyledView className="p-8">
           <StyledView className="flex items-center">
@@ -88,7 +94,7 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
             <StyledText className="my-6 text-center text-4xl font-bold text-white">{title}</StyledText>
             <StyledText className="text-center text-white">{subtitle}</StyledText>
           </StyledView>
-          <StyledView className="mt-8 rounded-lg bg-white p-4 shadow" style={{ gap: 12 }}>
+          <StyledView className="mt-8 rounded-lg bg-white p-4 shadow dark:bg-zinc-700" style={{ gap: 16 }}>
             {children}
           </StyledView>
         </StyledView>
