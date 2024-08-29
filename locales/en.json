@@ -1,6 +1,7 @@
 {
   "validator": {
-    "required": "This is required field"
+    "required": "This is required field",
+    "email": "Invalid e-mail address"
   },
   "signInToYourAccount": "Sign in to your Account",
   "createAccountOrLogIn": "Create an account or log in to explore about our app",

@@ -3,6 +3,7 @@ import AuthWrapper from '@/components/AuthWrapper'
 import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
 import { i18n } from '@/libs/i18n'
+import { validateEmail } from '@/utils/validation'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 interface SignInFormData {
@@ -28,7 +29,10 @@ const SignIn = () => {
       <CustomInput
         name="email"
         control={control}
-        rules={{ required: true }}
+        rules={{
+          required: true,
+          validate: validateEmail
+        }}
         error={errors.email}
         label={i18n.t('email')}
         placeholder={i18n.t('enterYourEmail')}

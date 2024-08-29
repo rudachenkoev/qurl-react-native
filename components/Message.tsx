@@ -49,9 +49,7 @@ const Message = ({ type = 'default', message, messageStyle = '' }: MessageProps)
         opacity: slideAnim
       }}
     >
-      <StyledText className={`px-2 text-xs ${getMessageStyle()} ${messageStyle}`}>
-        {messageText}
-      </StyledText>
+      <StyledText className={`px-2 text-xs ${getMessageStyle()} ${messageStyle}`}>{messageText}</StyledText>
     </Animated.View>
   ) : null
 }
