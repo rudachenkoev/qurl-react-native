@@ -22,12 +22,28 @@ declare interface CustomInputProps extends TextInputProps {
   errorStyle?: string
 }
 
+declare interface CustomOTPInputProps {
+  label?: string
+  length?: number
+  // Validation
+  name: FieldName
+  rules?: RegisterOptions
+  control: Control<any>
+  error?: FieldError
+  // Style props
+  labelStyle?: string
+  containerStyle?: string
+  inputStyle?: string
+  errorStyle?: string
+}
+
 declare interface CustomButtonProps extends TouchableOpacityProps {
   label: string
   appendIcon?: CustomIconProps
   prependIcon?: CustomIconProps
   color?: ColorType
   variant?: VariantType
+  loading?: boolean
   className?: string
   // Style props
   labelStyle?: string

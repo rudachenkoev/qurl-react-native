@@ -1,7 +1,7 @@
 import CustomIcon from '@/components/CustomIcon'
 import { ColorType, CustomButtonProps, VariantType } from '@/types/type'
 import { styled } from 'nativewind'
-import { Pressable, Text } from 'react-native'
+import { ActivityIndicator, Pressable, Text } from 'react-native'
 
 const colorStyles: Record<ColorType, Record<VariantType, { wrapper: string; label: string }>> = {
   primary: {
@@ -24,6 +24,7 @@ const colorStyles: Record<ColorType, Record<VariantType, { wrapper: string; labe
     outlined: { wrapper: 'bg-transparent border border-error-500', label: 'text-error-500' }
   }
 }
+
 const getColorStyle = (color: ColorType, variant: VariantType) =>
   colorStyles[color]?.[variant] || colorStyles.primary.default
 
@@ -41,14 +42,22 @@ const CustomButton = ({
   variant = 'default',
   color = 'primary',
   className = '',
+  loading = false,
   ...props
 }: CustomButtonProps) => {
   const { wrapper: wrapperColorClasses, label: labelColorClasses } = getColorStyle(color, variant)
+
   return (
     <StyledPressable className={`${wrapperColorClasses} ${className}`} {...props}>
-      {prependIcon && <CustomIcon {...prependIcon} />}
-      <StyledText className={`${labelColorClasses} ${labelStyle}`}>{label}</StyledText>
-      {appendIcon && <CustomIcon {...appendIcon} />}
+      {loading ? (
+        <ActivityIndicator color="#fff" />
+      ) : (
+        <>
+          {prependIcon && <CustomIcon {...prependIcon} />}
+          <StyledText className={`${labelColorClasses} ${labelStyle}`}>{label}</StyledText>
+          {appendIcon && <CustomIcon {...appendIcon} />}
+        </>
+      )}
     </StyledPressable>
   )
 }

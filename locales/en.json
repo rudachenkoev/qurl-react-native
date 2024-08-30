@@ -1,7 +1,12 @@
 {
   "validator": {
+    "invalidType": "Invalid type",
     "required": "This is required field",
-    "email": "Invalid e-mail address"
+    "email": "Invalid e-mail address",
+    "minLength": "Invalid minimum number of character(s)",
+    "containsUppercase": "Have to contain at least 1 uppercase letter",
+    "containsLowercase": "Have to contain at least 1 lowercase letter",
+    "containsNumber": "Have to contain at least 1 digit"
   },
   "signInToYourAccount": "Sign in to your Account",
   "createAccountOrLogIn": "Create an account or log in to explore about our app",
@@ -14,5 +19,7 @@
   "signUp": "Sign up",
   "signInWithGoogle": "Continue with Google",
   "dontHaveAnAccount": "Don't have an account?",
-  "alreadyHaveAnAccount": "Already have an account?"
+  "alreadyHaveAnAccount": "Already have an account?",
+  "sentVerificationEmail": "We have sent an email to <email> with a verification code.",
+  "sendVerificationCode": "Send verification code"
 }

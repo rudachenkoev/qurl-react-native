@@ -5,7 +5,16 @@ import { CustomInputProps } from '@/types/type'
 import { styled } from 'nativewind'
 import { useState } from 'react'
 import { Controller } from 'react-hook-form'
-import { Keyboard, KeyboardAvoidingView, Platform, Pressable, Text, TextInput, View } from 'react-native'
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  Text,
+  TextInput,
+  View,
+  useColorScheme
+} from 'react-native'
 
 const StyledView = styled(View)
 const StyledText = styled(Text)
@@ -14,7 +23,9 @@ const StyledTextInput = styled(TextInput)
 const CustomInput = ({
   name,
   control,
+  rules = {},
   error,
+  errorStyle,
   label = '',
   labelStyle,
   prependIcon,
@@ -24,8 +35,6 @@ const CustomInput = ({
   placeholder,
   textContentType = 'none',
   secureTextEntry = false,
-  rules = {},
-  errorStyle,
   ...props
 }: CustomInputProps) => {
   const [isSecure, setIsSecure] = useState(secureTextEntry)
@@ -35,6 +44,8 @@ const CustomInput = ({
     else if (appendIcon) return <CustomIcon {...appendIcon} />
     else return null
   }
+
+  const selectionColor = useColorScheme() === 'dark' ? '#f5f5f5' : '#0a0a0a'
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -56,7 +67,7 @@ const CustomInput = ({
             rules={rules}
             render={({ field: { onChange, onBlur, value } }) => (
               <StyledTextInput
-                className={`h-full flex-1 ${inputStyle}`}
+                className={`h-full flex-1 text-neutral-950 dark:text-neutral-100 ${inputStyle}`}
                 placeholder={placeholder || label}
                 placeholderTextColor="#b0b0b0"
                 textContentType={textContentType}
@@ -72,7 +83,7 @@ const CustomInput = ({
           {renderAppendIcon()}
         </StyledView>
 
-        {error && <Message type="error" message={error} messageStyle="mt-1" />}
+        {error && <Message type="error" message={error} messageStyle={`mt-1 ${errorStyle}`} />}
       </Pressable>
     </KeyboardAvoidingView>
   )
