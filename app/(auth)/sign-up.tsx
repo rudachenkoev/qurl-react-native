@@ -93,11 +93,12 @@ const SignUp = () => {
             rules={{ required: true, validate: validatePassword }}
             error={errors.password}
             label={i18n.t('password')}
-            placeholder={i18n.t('enterYourPassword')}
+            placeholder={i18n.t('createNewPassword')}
             textContentType="password"
             secureTextEntry={true}
             autoCapitalize="none"
             autoCorrect={false}
+            passwordRules="required: lower; required: upper; required: digit;"
           />
         </>
       )}

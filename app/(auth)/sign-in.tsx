@@ -2,10 +2,12 @@ import GoogleLogo from '@/assets/icons/google.png'
 import AuthWrapper from '@/components/AuthWrapper'
 import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
+import axios from '@/libs/axios'
 import { i18n } from '@/libs/i18n'
 import { validateEmail } from '@/utils/validation'
 import { Link } from 'expo-router'
 import { styled } from 'nativewind'
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Text } from 'react-native'
 
@@ -18,6 +20,8 @@ interface SignInFormData {
 }
 
 const SignIn = () => {
+  const [formState, setFormState] = useState({ loading: false })
+
   const {
     control,
     handleSubmit,
@@ -28,7 +32,17 @@ const SignIn = () => {
       password: ''
     }
   })
-  const onSubmit: SubmitHandler<SignInFormData> = data => console.log(data)
+  const onSubmit: SubmitHandler<SignInFormData> = async data => {
+    try {
+      setFormState(prev => ({ ...prev, loading: true }))
+      await axios.post('api/v1/auth/login/', data)
+      alert('Successful authorization')
+    } catch (err) {
+      console.log('Authorization error', err)
+    } finally {
+      setFormState(prev => ({ ...prev, loading: false }))
+    }
+  }
 
   return (
     <AuthWrapper title={i18n.t('signInToYourAccount')} subtitle={i18n.t('createAccountOrLogIn')}>
@@ -56,7 +70,7 @@ const SignIn = () => {
         autoCapitalize="none"
         autoCorrect={false}
       />
-      <CustomButton label={i18n.t('signIn')} onPress={handleSubmit(onSubmit)} />
+      <CustomButton label={i18n.t('signIn')} loading={formState.loading} onPress={handleSubmit(onSubmit)} />
       <CustomButton
         label={i18n.t('signInWithGoogle')}
         variant="outlined"

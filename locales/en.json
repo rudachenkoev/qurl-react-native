@@ -8,9 +8,17 @@
     "containsLowercase": "Have to contain at least 1 lowercase letter",
     "containsNumber": "Have to contain at least 1 digit"
   },
+  "errors": {
+    "No user information was found or the data is incorrect": "No user information was found or the data is incorrect",
+    "No user with this email was found": "No user with this email was found",
+    "Password recovery request not found": "Password recovery request not found",
+    "Invalid verification code": "Invalid verification code",
+    "A user with this email address already exists": "A user with this email address already exists",
+    "Registration request not found": "Registration request not found"
+  },
   "signInToYourAccount": "Sign in to your Account",
   "createAccountOrLogIn": "Create an account or log in to explore about our app",
-  "createAnAccountToContinue": "Create an account to continue!",
+  "createAnAccountToContinue": "Create an account to continue",
   "email": "Email",
   "enterYourEmail": "Enter your email",
   "password": "Password",
@@ -21,5 +29,6 @@
   "dontHaveAnAccount": "Don't have an account?",
   "alreadyHaveAnAccount": "Already have an account?",
   "sentVerificationEmail": "We have sent an email to <email> with a verification code.",
-  "sendVerificationCode": "Send verification code"
+  "sendVerificationCode": "Send verification code",
+  "createNewPassword": "Create new password"
 }

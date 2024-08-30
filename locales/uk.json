@@ -1,14 +1,34 @@
 {
   "validator": {
-    "required": "Обов'язкове поле",
-    "email": "Невірна адреса електронної пошти"
+    "invalidType": "Неправильний тип",
+    "required": "Це обов'язкове поле",
+    "email": "Неправильна адреса електронної пошти",
+    "minLength": "Невірна мінімальна кількість символів",
+    "containsUppercase": "Повинен містити принаймні 1 велику літеру",
+    "containsLowercase": "Повинен містити принаймні 1 малу літеру",
+    "containsNumber": "Повинен містити принаймні 1 цифру"
   },
-  "signInToYourAccount": "Увійдіть до свого акаунту",
-  "createAccountOrLogIn": "Створіть акаунт або увійдіть, щоб дізнатися більше про наш додаток",
+  "errors": {
+    "No user information was found or the data is incorrect": "Інформацію про користувача не знайдено або дані невірні",
+    "No user with this email was found": "Користувача з цією електронною адресою не знайдено",
+    "Password recovery request not found": "Запит на відновлення пароля не знайдено",
+    "Invalid verification code": "Невірний код підтвердження",
+    "A user with this email address already exists": "Користувач з такою електронною адресою вже існує",
+    "Registration request not found": "Запит на реєстрацію не знайдено"
+  },
+  "signInToYourAccount": "Увійдіть у свій обліковий запис",
+  "createAccountOrLogIn": "Створіть обліковий запис або увійдіть, щоб дізнатися більше про наш додаток",
+  "createAnAccountToContinue": "Створіть обліковий запис, щоб продовжити",
   "email": "Електронна пошта",
-  "enterYourEmail": "Введіть свою електронну пошту",
+  "enterYourEmail": "Введіть свою електронну адресу",
   "password": "Пароль",
   "enterYourPassword": "Введіть свій пароль",
   "signIn": "Увійти",
-  "signInWithGoogle": "Продовжити з Google"
+  "signUp": "Зареєструватися",
+  "signInWithGoogle": "Продовжити з Google",
+  "dontHaveAnAccount": "Немає облікового запису?",
+  "alreadyHaveAnAccount": "Вже маєте обліковий запис?",
+  "sentVerificationEmail": "Ми надіслали електронний лист на <email> з кодом підтвердження.",
+  "sendVerificationCode": "Надіслати код підтвердження",
+  "createNewPassword": "Створіть новий пароль"
 }
