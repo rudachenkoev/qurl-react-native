@@ -21,7 +21,7 @@ interface SignUpFormData {
 }
 
 const SignUp = () => {
-  const [step, setStep] = useState(1)
+  const [formState, setFormState] = useState({ step: 1, loading: false })
 
   const {
     control,
@@ -36,31 +36,29 @@ const SignUp = () => {
     }
   })
 
-  const [submitLoading, setSubmitLoading] = useState(false)
-
   const onSubmit: SubmitHandler<SignUpFormData> = async data => {
-    if (step === 1) await createVerificationRequest(data)
-    else if (step === 2) await confirmVerificationRequest(data)
+    if (formState.step === 1) await createVerificationRequest(data)
+    else await confirmVerificationRequest(data)
   }
 
   const createVerificationRequest = async (data: SignUpFormData) => {
     try {
-      setSubmitLoading(true)
+      setFormState(prev => ({ ...prev, loading: true }))
       await axios.post('api/v1/auth/registration-requests/', {
         email: data.email,
         password: data.password
       })
-      setStep(2)
+      setFormState(prev => ({ ...prev, step: 2 }))
     } catch (err) {
       console.log('Verification request sending error', err)
     } finally {
-      setSubmitLoading(false)
+      setFormState(prev => ({ ...prev, loading: false }))
     }
   }
 
   const confirmVerificationRequest = async (data: SignUpFormData) => {
     try {
-      setSubmitLoading(true)
+      setFormState(prev => ({ ...prev, loading: true }))
       await axios.post('api/v1/auth/registration-requests/confirmation/', {
         email: data.email,
         verificationCode: data.verificationCode
@@ -69,21 +67,18 @@ const SignUp = () => {
     } catch (err) {
       console.log('Verification request confirmation error', err)
     } finally {
-      setSubmitLoading(false)
+      setFormState(prev => ({ ...prev, loading: false }))
     }
   }
 
   return (
     <AuthWrapper title={i18n.t('signUp')} subtitle={i18n.t('createAnAccountToContinue')}>
-      {step === 1 && (
+      {formState.step === 1 && (
         <>
           <CustomInput
             name="email"
             control={control}
-            rules={{
-              required: true,
-              validate: validateEmail
-            }}
+            rules={{ required: true, validate: validateEmail }}
             error={errors.email}
             label={i18n.t('email')}
             placeholder={i18n.t('enterYourEmail')}
@@ -95,10 +90,7 @@ const SignUp = () => {
           <CustomInput
             name="password"
             control={control}
-            rules={{
-              required: true,
-              validate: validatePassword
-            }}
+            rules={{ required: true, validate: validatePassword }}
             error={errors.password}
             label={i18n.t('password')}
             placeholder={i18n.t('enterYourPassword')}
@@ -109,7 +101,7 @@ const SignUp = () => {
           />
         </>
       )}
-      {step === 2 && (
+      {formState.step === 2 && (
         <>
           <StyledText className="text-base text-neutral-950 dark:text-neutral-100">
             {i18n.tsx('sentVerificationEmail', {
@@ -123,23 +115,19 @@ const SignUp = () => {
           <CustomOTPInput
             name="verificationCode"
             control={control}
-            rules={{
-              required: true,
-              minLength: 6,
-              maxLength: 6
-            }}
+            rules={{ required: true, minLength: 6, maxLength: 6 }}
             error={errors.verificationCode}
           />
         </>
       )}
 
       <CustomButton
-        label={i18n.t(step === 1 ? 'sendVerificationCode' : 'signUp')}
-        loading={submitLoading}
+        label={i18n.t(formState.step === 1 ? 'sendVerificationCode' : 'signUp')}
+        loading={formState.loading}
         onPress={handleSubmit(onSubmit)}
       />
 
-      {step === 1 && (
+      {formState.step === 1 && (
         <StyledLink href="/sign-in" className="mt-3 text-center text-sm text-neutral-950 dark:text-neutral-100">
           {i18n.t('alreadyHaveAnAccount')}{' '}
           <StyledText className="text-primary-500 dark:text-slate-950">{i18n.t('signIn')}</StyledText>

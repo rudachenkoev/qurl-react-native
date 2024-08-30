@@ -35,10 +35,7 @@ const SignIn = () => {
       <CustomInput
         name="email"
         control={control}
-        rules={{
-          required: true,
-          validate: validateEmail
-        }}
+        rules={{ required: true, validate: validateEmail }}
         error={errors.email}
         label={i18n.t('email')}
         placeholder={i18n.t('enterYourEmail')}

@@ -17,17 +17,11 @@ export const validatePassword = (value: unknown) => {
   const lowercaseRegex = /^(?=.*[a-z])/
   const numberRegex = /^(?=.*\d)/
 
-  if (!uppercaseRegex.test(value)) {
-    return i18n.t('validator.containsUppercase')
-  }
+  if (!uppercaseRegex.test(value)) return i18n.t('validator.containsUppercase')
 
-  if (!lowercaseRegex.test(value)) {
-    return i18n.t('validator.containsLowercase')
-  }
+  if (!lowercaseRegex.test(value)) return i18n.t('validator.containsLowercase')
 
-  if (!numberRegex.test(value)) {
-    return i18n.t('validator.containsNumber')
-  }
+  if (!numberRegex.test(value)) return i18n.t('validator.containsNumber')
 
   return true
 }
