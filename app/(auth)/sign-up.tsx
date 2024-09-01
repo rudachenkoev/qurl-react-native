@@ -107,7 +107,7 @@ const SignUp = () => {
           <StyledText className="text-base text-neutral-950 dark:text-neutral-100">
             {i18n.tsx('sentVerificationEmail', {
               email: (
-                <StyledText className="font-medium text-primary-500 dark:text-slate-950">
+                <StyledText className="text-primary-500 font-medium dark:text-slate-950">
                   {getValues('email')}
                 </StyledText>
               )

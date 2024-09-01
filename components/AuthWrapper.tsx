@@ -74,7 +74,7 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
 
   return (
     <StyledView className="flex-1">
-      <StyledView className="relative flex-1 bg-primary-500 dark:bg-slate-950" onLayout={handleLayout}>
+      <StyledView className="bg-primary-500 relative flex-1 dark:bg-slate-950" onLayout={handleLayout}>
         {renderGridLines}
         {dots.map((dot, index) => (
           <GlowingDot
@@ -86,7 +86,7 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
           />
         ))}
       </StyledView>
-      <StyledView className="flex-1 bg-secondary-50 dark:bg-slate-950" />
+      <StyledView className="bg-secondary-50 flex-1 dark:bg-slate-950" />
       <StyledSafeAreaView className="absolute inset-x-0 top-0">
         <StyledView className="p-8">
           <StyledView className="flex items-center">

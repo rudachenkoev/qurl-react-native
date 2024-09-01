@@ -1,12 +1,14 @@
 import HelloAvatar from '@/assets/images/HelloAvatar'
 import CustomButton from '@/components/CustomButton'
 import CustomSelect from '@/components/CustomSelect'
+import ThemedText from '@/components/ThemedText'
 import { locales, themes } from '@/constants'
+import { ThemeType, useTheme } from '@/contexts/ThemeContext'
 import { i18n } from '@/libs/i18n'
 import { router } from 'expo-router'
 import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { SafeAreaView, Text, View, useColorScheme } from 'react-native'
+import { SafeAreaView, View } from 'react-native'
 import Swiper from 'react-native-swiper'
 
 interface OnboardingFormData {
@@ -15,25 +17,28 @@ interface OnboardingFormData {
 }
 
 const Onboarding = () => {
+  const { theme, setTheme, isDarkTheme } = useTheme()
+  const handleThemeChange = (newTheme: string | number) => {
+    const themeStr = String(newTheme)
+    if (themeStr && themes.includes(themeStr)) setTheme(themeStr as ThemeType)
+  }
+
   const [locale, setLocale] = useState(i18n.locale)
   const handleLanguageChange = (newLocale: string | number) => {
-    newLocale = String(newLocale)
-    i18n.locale = newLocale
-    setLocale(newLocale)
+    const localeStr = String(newLocale)
+    i18n.locale = localeStr
+    setLocale(localeStr)
   }
 
   const { control } = useForm<OnboardingFormData>({
-    defaultValues: {
-      locale: i18n.locale,
-      theme: useColorScheme()
-    }
+    defaultValues: { locale, theme: theme || '' }
   })
 
   const swiperRef = useRef<Swiper>(null)
   const [activeIndex, setActiveIndex] = useState(0)
 
   return (
-    <SafeAreaView className="bg-shark-50 dark:bg-shark-950">
+    <SafeAreaView className={`${isDarkTheme ? 'bg-shark-950' : 'bg-shark-50'}`}>
       <View className="flex h-full items-center justify-between p-6">
         <View className="w-full flex-row justify-end">
           <CustomButton
@@ -47,30 +52,26 @@ const Onboarding = () => {
         <Swiper
           ref={swiperRef}
           loop={false}
-          dot={<View className="mx-1 h-2 w-4 rounded-full bg-shark-100 dark:bg-shark-900" />}
-          activeDot={<View className="mx-1 h-2 w-8 rounded-full bg-shark-950 dark:bg-shark-100" />}
+          dot={<View className={`mx-1 h-2 w-4 rounded-full ${isDarkTheme ? 'bg-shark-900' : 'bg-shark-100'}`} />}
+          activeDot={<View className={`mx-1 h-2 w-8 rounded-full ${isDarkTheme ? 'bg-shark-100' : 'bg-shark-950'}`} />}
           onIndexChanged={index => setActiveIndex(index)}
         >
           <View className="flex h-full items-center justify-center">
             <HelloAvatar className="-mb-4" />
-            <View className="rounded-lg bg-white-lilac-50 p-5 shadow dark:bg-shark-900">
-              <Text className="font-NunitoExtraBold text-3xl text-shark-950 dark:text-shark-50">
-                {i18n.t('welcome')}
-              </Text>
-              <Text className="mt-2 font-NunitoRegular text-lg text-shark-950 dark:text-shark-50">
+            <View className={`rounded-lg p-5 shadow ${isDarkTheme ? 'bg-shark-900' : 'bg-white-lilac-50'}`}>
+              <ThemedText type="title">{i18n.t('welcome')}</ThemedText>
+              <ThemedText type="subtitle" className="mt-2">
                 {i18n.t('welcomeIntroduction')}
-              </Text>
+              </ThemedText>
             </View>
           </View>
           <View className="flex h-full items-center justify-center">
             <HelloAvatar className="-mb-4" />
-            <View className="rounded-lg bg-white-lilac-50 p-5 shadow dark:bg-shark-800">
-              <Text className="font-NunitoExtraBold text-3xl text-shark-950 dark:text-shark-50">
-                {i18n.t('languagePreference')}
-              </Text>
-              <Text className="mt-2 font-NunitoRegular text-lg text-shark-950 dark:text-shark-50">
+            <View className={`rounded-lg p-5 shadow ${isDarkTheme ? 'bg-shark-900' : 'bg-white-lilac-50'}`}>
+              <ThemedText type="title">{i18n.t('languagePreference')}</ThemedText>
+              <ThemedText type="subtitle" className="mt-2">
                 {i18n.t('languagePreferenceIntroduction')}
-              </Text>
+              </ThemedText>
               <CustomSelect
                 placeholder={i18n.t('selectLanguage')}
                 options={locales}
@@ -83,19 +84,18 @@ const Onboarding = () => {
           </View>
           <View className="flex h-full items-center justify-center">
             <HelloAvatar className="-mb-4" />
-            <View className="rounded-lg bg-white-lilac-50 p-5 shadow dark:bg-shark-800">
-              <Text className="font-NunitoExtraBold text-3xl text-shark-950 dark:text-shark-50">
-                {i18n.t('chooseYourTheme')}
-              </Text>
-              <Text className="mt-2 font-NunitoRegular text-lg text-shark-950 dark:text-shark-50">
+            <View className={`rounded-lg p-5 shadow ${isDarkTheme ? 'bg-shark-900' : 'bg-white-lilac-50'}`}>
+              <ThemedText type="title">{i18n.t('chooseYourTheme')}</ThemedText>
+              <ThemedText type="subtitle" className="mt-2">
                 {i18n.t('chooseYourThemeIntroduction')}
-              </Text>
+              </ThemedText>
               <CustomSelect
                 placeholder={i18n.t('selectTheme')}
                 options={themes.map(theme => ({ id: theme, name: i18n.t(`theme.${theme}`) }))}
                 name="theme"
                 control={control}
                 containerStyle="mt-3"
+                onSelect={handleThemeChange}
               />
             </View>
           </View>
