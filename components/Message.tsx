@@ -24,7 +24,7 @@ const Message = ({ type = 'default', message, messageStyle = '' }: MessageProps)
   }, [message, slideAnim])
 
   const getMessageStyle = () => {
-    return type === 'error' ? 'text-error-500' : ''
+    return type === 'error' ? 'text-red-orange-500' : ''
   }
 
   const getMessageText = () => {

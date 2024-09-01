@@ -5,23 +5,17 @@ import { ActivityIndicator, Pressable, Text } from 'react-native'
 
 const colorStyles: Record<ColorType, Record<VariantType, { wrapper: string; label: string }>> = {
   primary: {
-    default: { wrapper: 'bg-primary-500 dark:bg-slate-950', label: 'text-neutral-100' },
+    default: { wrapper: 'bg-shark-950 dark:bg-shark-50', label: 'text-shark-50 dark:text-shark-950' },
     outlined: {
-      wrapper: 'bg-transparent border border-primary-500 dark:border-neutral-100',
-      label: 'text-primary-500 dark:text-neutral-100'
-    }
+      wrapper: 'bg-transparent border border-shark-950 dark:border-shark-50',
+      label: 'text-shark-950 dark:text-shark-50'
+    },
+    text: { wrapper: 'bg-transparent', label: 'text-shark-950 dark:text-shark-50' }
   },
   secondary: {
-    default: { wrapper: 'bg-secondary-500', label: 'text-neutral-100' },
-    outlined: { wrapper: 'bg-transparent border border-secondary-500', label: 'text-secondary-500' }
-  },
-  success: {
-    default: { wrapper: 'bg-success-500', label: 'text-neutral-100' },
-    outlined: { wrapper: 'bg-transparent border border-success-500', label: 'text-success-500' }
-  },
-  error: {
-    default: { wrapper: 'bg-error-500', label: 'text-neutral-100' },
-    outlined: { wrapper: 'bg-transparent border border-error-500', label: 'text-error-500' }
+    default: { wrapper: 'bg-shark-400', label: 'text-shark-50' },
+    outlined: { wrapper: 'bg-transparent border border-shark-400', label: 'text-shark-400' },
+    text: { wrapper: 'bg-transparent', label: 'text-shark-400' }
   }
 }
 
@@ -30,13 +24,13 @@ const getColorStyle = (color: ColorType, variant: VariantType) =>
 
 const StyledPressable = styled(
   Pressable,
-  'w-fit flex-row items-center justify-center rounded-lg px-4 py-2 transition disabled:opacity-50'
+  'inline-flex flex-row items-center justify-center rounded-lg px-4 py-2 transition disabled:opacity-50'
 )
 const StyledText = styled(Text)
 
 const CustomButton = ({
   label = '',
-  labelStyle = 'text-lg font-medium',
+  labelStyle,
   prependIcon,
   appendIcon,
   variant = 'default',
@@ -54,7 +48,7 @@ const CustomButton = ({
       ) : (
         <>
           {prependIcon && <CustomIcon {...prependIcon} />}
-          <StyledText className={`${labelColorClasses} ${labelStyle}`}>{label}</StyledText>
+          <StyledText className={`font-NunitoMedium text-lg ${labelColorClasses} ${labelStyle}`}>{label}</StyledText>
           {appendIcon && <CustomIcon {...appendIcon} />}
         </>
       )}

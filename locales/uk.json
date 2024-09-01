@@ -2,33 +2,50 @@
   "validator": {
     "invalidType": "Неправильний тип",
     "required": "Це обов'язкове поле",
-    "email": "Неправильна адреса електронної пошти",
-    "minLength": "Невірна мінімальна кількість символів",
-    "containsUppercase": "Повинен містити принаймні 1 велику літеру",
-    "containsLowercase": "Повинен містити принаймні 1 малу літеру",
-    "containsNumber": "Повинен містити принаймні 1 цифру"
+    "email": "Неправильна електронна адреса",
+    "minLength": "Неправильна мінімальна кількість символів",
+    "containsUppercase": "Повинно містити принаймні 1 велику літеру",
+    "containsLowercase": "Повинно містити принаймні 1 малу літеру",
+    "containsNumber": "Повинно містити принаймні 1 цифру"
   },
   "errors": {
-    "No user information was found or the data is incorrect": "Інформацію про користувача не знайдено або дані невірні",
+    "No user information was found or the data is incorrect": "Інформацію про користувача не знайдено або дані неправильні",
     "No user with this email was found": "Користувача з цією електронною адресою не знайдено",
     "Password recovery request not found": "Запит на відновлення пароля не знайдено",
-    "Invalid verification code": "Невірний код підтвердження",
-    "A user with this email address already exists": "Користувач з такою електронною адресою вже існує",
+    "Invalid verification code": "Неправильний код перевірки",
+    "A user with this email address already exists": "Користувач з цією електронною адресою вже існує",
     "Registration request not found": "Запит на реєстрацію не знайдено"
   },
-  "signInToYourAccount": "Увійдіть у свій обліковий запис",
+  "btn": {
+    "skip": "Пропустити",
+    "next": "Далі"
+  },
+  "theme": {
+    "light": "Світла",
+    "dark": "Темна"
+  },
+  "signInToYourAccount": "Увійдіть до свого облікового запису",
   "createAccountOrLogIn": "Створіть обліковий запис або увійдіть, щоб дізнатися більше про наш додаток",
   "createAnAccountToContinue": "Створіть обліковий запис, щоб продовжити",
-  "email": "Електронна пошта",
+  "email": "Електронна адреса",
   "enterYourEmail": "Введіть свою електронну адресу",
   "password": "Пароль",
   "enterYourPassword": "Введіть свій пароль",
   "signIn": "Увійти",
   "signUp": "Зареєструватися",
   "signInWithGoogle": "Продовжити з Google",
-  "dontHaveAnAccount": "Немає облікового запису?",
-  "alreadyHaveAnAccount": "Вже маєте обліковий запис?",
-  "sentVerificationEmail": "Ми надіслали електронний лист на <email> з кодом підтвердження.",
-  "sendVerificationCode": "Надіслати код підтвердження",
-  "createNewPassword": "Створіть новий пароль"
+  "dontHaveAnAccount": "Ще немає облікового запису?",
+  "alreadyHaveAnAccount": "Вже є обліковий запис?",
+  "sentVerificationEmail": "Ми надіслали електронного листа на <email> з кодом перевірки.",
+  "sendVerificationCode": "Надіслати код перевірки",
+  "createNewPassword": "Створити новий пароль",
+  "welcome": "Ласкаво просимо",
+  "welcomeIntroduction": "Перед тим як почати додавати свої закладки, давайте налаштуємо кілька параметрів для вашої зручності.",
+  "language": "Мова",
+  "languagePreference": "Переваги щодо мови",
+  "languagePreferenceIntroduction": "Ми наполегливо працюємо над тим, щоб додаток міг використовуватися в кожному куточку світу.",
+  "selectLanguage": "Оберіть мову",
+  "chooseYourTheme": "Оберіть свою тему",
+  "chooseYourThemeIntroduction": "Світла чи темна? Налаштуйте зовнішній вигляд додатку відповідно до вашого стилю та настрою.",
+  "selectTheme": "Оберіть тему"
 }
