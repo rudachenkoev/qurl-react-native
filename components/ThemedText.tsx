@@ -5,7 +5,7 @@ import { Text, TextProps } from 'react-native'
 const StyledText = styled(Text)
 
 interface ThemedTextProps extends TextProps {
-  type?: 'default' | 'title' | 'subtitle'
+  type?: 'default' | 'title' | 'subtitle' | 'label'
   className?: string
 }
 
@@ -18,16 +18,15 @@ const ThemedText = ({ type = 'default', className, ...rest }: ThemedTextProps) =
         return 'font-NunitoExtraBold text-3xl'
       case 'subtitle':
         return 'font-NunitoRegular text-lg'
+      case 'label':
+        return 'font-NunitoLight text-sm'
       default:
-        return ''
+        return 'font-NunitoRegular text-base'
     }
   }
 
   return (
-    <StyledText
-      className={`${isDarkTheme ? 'text-shark-50' : 'text-shark-950'} ${getThemeTextStyle()} ${className}`}
-      {...rest}
-    />
+    <StyledText className={`text-shark-${isDarkTheme ? '50' : '950'} ${getThemeTextStyle()} ${className}`} {...rest} />
   )
 }
 

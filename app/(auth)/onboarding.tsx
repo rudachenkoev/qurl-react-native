@@ -26,7 +26,7 @@ const Onboarding = () => {
   const [activeIndex, setActiveIndex] = useState(0)
 
   return (
-    <SafeAreaView className={`${isDarkTheme ? 'bg-shark-950' : 'bg-shark-50'}`}>
+    <SafeAreaView className={`bg-shark-${isDarkTheme ? '950' : '50'}`}>
       <View className="flex h-full items-center justify-between p-6">
         <View className="w-full flex-row justify-end">
           <CustomButton
@@ -40,8 +40,8 @@ const Onboarding = () => {
         <Swiper
           ref={swiperRef}
           loop={false}
-          dot={<View className={`mx-1 h-2 w-4 rounded-full ${isDarkTheme ? 'bg-shark-900' : 'bg-shark-100'}`} />}
-          activeDot={<View className={`mx-1 h-2 w-8 rounded-full ${isDarkTheme ? 'bg-shark-100' : 'bg-shark-950'}`} />}
+          dot={<View className={`mx-1 h-2 w-4 rounded-full bg-shark-${isDarkTheme ? '900' : '100'}`} />}
+          activeDot={<View className={`mx-1 h-2 w-8 rounded-full bg-shark-${isDarkTheme ? '100' : '950'}`} />}
           onIndexChanged={index => setActiveIndex(index)}
         >
           <OnboardingWelcome />
