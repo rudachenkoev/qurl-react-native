@@ -1,9 +1,8 @@
-import HelloAvatar from '@/assets/images/HelloAvatar'
 import CustomButton from '@/components/CustomButton'
-import CustomSelect from '@/components/CustomSelect'
-import ThemedText from '@/components/ThemedText'
-import { locales, themes } from '@/constants'
-import { ThemeType, useTheme } from '@/contexts/ThemeContext'
+import OnboardingLanguage from '@/components/Onboarding/Language'
+import OnboardingTheme from '@/components/Onboarding/Theme'
+import OnboardingWelcome from '@/components/Onboarding/Welcome'
+import { useTheme } from '@/contexts/ThemeContext'
 import { i18n } from '@/libs/i18n'
 import { router } from 'expo-router'
 import { useRef, useState } from 'react'
@@ -17,21 +16,10 @@ interface OnboardingFormData {
 }
 
 const Onboarding = () => {
-  const { theme, setTheme, isDarkTheme } = useTheme()
-  const handleThemeChange = (newTheme: string | number) => {
-    const themeStr = String(newTheme)
-    if (themeStr && themes.includes(themeStr)) setTheme(themeStr as ThemeType)
-  }
-
-  const [locale, setLocale] = useState(i18n.locale)
-  const handleLanguageChange = (newLocale: string | number) => {
-    const localeStr = String(newLocale)
-    i18n.locale = localeStr
-    setLocale(localeStr)
-  }
+  const { theme, isDarkTheme } = useTheme()
 
   const { control } = useForm<OnboardingFormData>({
-    defaultValues: { locale, theme: theme || '' }
+    defaultValues: { locale: i18n.locale, theme: theme || '' }
   })
 
   const swiperRef = useRef<Swiper>(null)
@@ -56,49 +44,9 @@ const Onboarding = () => {
           activeDot={<View className={`mx-1 h-2 w-8 rounded-full ${isDarkTheme ? 'bg-shark-100' : 'bg-shark-950'}`} />}
           onIndexChanged={index => setActiveIndex(index)}
         >
-          <View className="flex h-full items-center justify-center">
-            <HelloAvatar className="-mb-4" />
-            <View className={`rounded-lg p-5 shadow ${isDarkTheme ? 'bg-shark-900' : 'bg-white-lilac-50'}`}>
-              <ThemedText type="title">{i18n.t('welcome')}</ThemedText>
-              <ThemedText type="subtitle" className="mt-2">
-                {i18n.t('welcomeIntroduction')}
-              </ThemedText>
-            </View>
-          </View>
-          <View className="flex h-full items-center justify-center">
-            <HelloAvatar className="-mb-4" />
-            <View className={`rounded-lg p-5 shadow ${isDarkTheme ? 'bg-shark-900' : 'bg-white-lilac-50'}`}>
-              <ThemedText type="title">{i18n.t('languagePreference')}</ThemedText>
-              <ThemedText type="subtitle" className="mt-2">
-                {i18n.t('languagePreferenceIntroduction')}
-              </ThemedText>
-              <CustomSelect
-                placeholder={i18n.t('selectLanguage')}
-                options={locales}
-                name="locale"
-                control={control}
-                containerStyle="mt-3"
-                onSelect={handleLanguageChange}
-              />
-            </View>
-          </View>
-          <View className="flex h-full items-center justify-center">
-            <HelloAvatar className="-mb-4" />
-            <View className={`rounded-lg p-5 shadow ${isDarkTheme ? 'bg-shark-900' : 'bg-white-lilac-50'}`}>
-              <ThemedText type="title">{i18n.t('chooseYourTheme')}</ThemedText>
-              <ThemedText type="subtitle" className="mt-2">
-                {i18n.t('chooseYourThemeIntroduction')}
-              </ThemedText>
-              <CustomSelect
-                placeholder={i18n.t('selectTheme')}
-                options={themes.map(theme => ({ id: theme, name: i18n.t(`theme.${theme}`) }))}
-                name="theme"
-                control={control}
-                containerStyle="mt-3"
-                onSelect={handleThemeChange}
-              />
-            </View>
-          </View>
+          <OnboardingWelcome />
+          <OnboardingLanguage control={control} />
+          <OnboardingTheme control={control} />
         </Swiper>
 
         <CustomButton
