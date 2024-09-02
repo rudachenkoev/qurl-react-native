@@ -26,7 +26,10 @@ const ThemedText = ({ type = 'default', className, ...rest }: ThemedTextProps) =
   }
 
   return (
-    <StyledText className={`text-shark-${isDarkTheme ? '50' : '950'} ${getThemeTextStyle()} ${className}`} {...rest} />
+    <StyledText
+      className={`${isDarkTheme ? 'text-shark-50' : 'text-shark-950'} ${getThemeTextStyle()} ${className}`}
+      {...rest}
+    />
   )
 }
 

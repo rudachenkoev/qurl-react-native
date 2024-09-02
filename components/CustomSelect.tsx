@@ -61,7 +61,7 @@ const CustomSelect = ({
               onRequestClose={() => setPickerVisible(false)}
             >
               <View className="flex-1 justify-end">
-                <View className={`px-3 bg-shark-${isDarkTheme ? '900' : '50'}`}>
+                <View className={`px-3 ${isDarkTheme ? 'bg-shark-900' : 'bg-shark-50'}`}>
                   <Picker
                     selectedValue={value}
                     onValueChange={itemValue => {

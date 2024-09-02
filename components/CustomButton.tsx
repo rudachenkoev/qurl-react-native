@@ -12,13 +12,13 @@ const StyledPressable = styled(
 const StyledText = styled(Text)
 
 const CustomButton = ({
-  label = '',
+  label,
   labelStyle,
   prependIcon,
   appendIcon,
   variant = 'default',
   color = 'primary',
-  className = '',
+  className,
   loading = false,
   ...props
 }: CustomButtonProps) => {
@@ -26,12 +26,15 @@ const CustomButton = ({
 
   const colorStyles: Record<ColorType, Record<VariantType, { wrapper: string; label: string }>> = {
     primary: {
-      default: { wrapper: `bg-shark-${isDarkTheme ? '50' : '950'}`, label: `text-shark-${isDarkTheme ? '950' : '50'}` },
-      outlined: {
-        wrapper: `bg-transparent border border-shark-${isDarkTheme ? '50' : '950'}`,
-        label: `text-shark-${isDarkTheme ? '50' : '950'}`
+      default: {
+        wrapper: `${isDarkTheme ? 'bg-shark-50' : 'bg-shark-950'}`,
+        label: `${isDarkTheme ? 'text-shark-950' : 'text-shark-50'}`
       },
-      text: { wrapper: 'bg-transparent', label: `text-shark-${isDarkTheme ? '50' : '950'}` }
+      outlined: {
+        wrapper: `bg-transparent border ${isDarkTheme ? 'border-shark-50' : 'border-shark-950'}`,
+        label: `${isDarkTheme ? 'text-shark-50' : 'text-shark-950'}`
+      },
+      text: { wrapper: 'bg-transparent', label: `${isDarkTheme ? 'text-shark-50' : 'text-shark-950'}` }
     },
     secondary: {
       default: { wrapper: 'bg-shark-400', label: 'text-shark-50' },

@@ -1,6 +1,6 @@
 import { IconProps } from '@expo/vector-icons/build/createIconSet'
 import { Control, FieldError, FieldName, RegisterOptions } from 'react-hook-form'
-import { ImageSourcePropType, TextInputProps, PressableProps } from 'react-native'
+import { ImageSourcePropType, PressableProps, TextInputProps } from 'react-native'
 
 export type VariantType = 'default' | 'outlined' | 'text'
 export type ColorType = 'primary' | 'secondary'
