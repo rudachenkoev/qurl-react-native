@@ -8,7 +8,7 @@ import { useTheme } from '@/contexts/ThemeContext'
 import axios from '@/libs/axios'
 import { i18n } from '@/libs/i18n'
 import { validateEmail, validatePassword } from '@/utils/validation'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 interface SignUpFormData {
@@ -21,6 +21,7 @@ const SignUp = () => {
   const { isDarkTheme } = useTheme()
 
   const [formState, setFormState] = useState({ step: 1, loading: false })
+  const [cooldown, setCooldown] = useState(0)
 
   const {
     control,
@@ -35,28 +36,42 @@ const SignUp = () => {
     }
   })
 
+  useEffect(() => {
+    let timer: NodeJS.Timeout
+    if (cooldown > 0) {
+      timer = setTimeout(() => setCooldown(cooldown - 1), 1000)
+    }
+    return () => clearTimeout(timer)
+  }, [cooldown])
+
   const onSubmit: SubmitHandler<SignUpFormData> = useCallback(
-    async data => {
-      if (formState.step === 1) await createVerificationRequest(data)
-      else await confirmVerificationRequest(data)
+    data => {
+      if (formState.step === 1) createVerificationRequest(data.email, data.password)
+      else confirmVerificationRequest(data)
     },
     [formState.step]
   )
 
-  const createVerificationRequest = useCallback(async (data: SignUpFormData) => {
-    try {
-      setFormState(prev => ({ ...prev, loading: true }))
-      await axios.post('api/v1/auth/registration-requests/', {
-        email: data.email,
-        password: data.password
-      })
-      setFormState(prev => ({ ...prev, step: 2 }))
-    } catch (err) {
-      console.log('Verification request sending error', err)
-    } finally {
-      setFormState(prev => ({ ...prev, loading: false }))
-    }
-  }, [])
+  const createVerificationRequest = useCallback(
+    async (email: string, password: string) => {
+      if (cooldown > 0) return // Prevent sending if cooldown is active
+
+      try {
+        setFormState(prev => ({ ...prev, loading: true }))
+        await axios.post('api/v1/auth/registration-requests/', {
+          email,
+          password
+        })
+        setFormState(prev => ({ ...prev, step: 2 }))
+        setCooldown(30) // Start cooldown for 30 seconds
+      } catch (err) {
+        console.log('Verification request sending error', err)
+      } finally {
+        setFormState(prev => ({ ...prev, loading: false }))
+      }
+    },
+    [cooldown]
+  )
 
   const confirmVerificationRequest = useCallback(async (data: SignUpFormData) => {
     try {
@@ -72,6 +87,11 @@ const SignUp = () => {
       setFormState(prev => ({ ...prev, loading: false }))
     }
   }, [])
+
+  const handleResendVerification = useCallback(() => {
+    const { email, password } = getValues()
+    createVerificationRequest(email, password)
+  }, [createVerificationRequest, getValues])
 
   return (
     <AuthWrapper title={i18n.t('signUp')} subtitle={i18n.t('createAnAccountToContinue')}>
@@ -138,6 +158,19 @@ const SignUp = () => {
         <ThemedText className="mt-6 text-center text-sm">
           {i18n.t('alreadyHaveAnAccount')} <ThemedLink href="/sign-in">{i18n.t('signIn')}</ThemedLink>
         </ThemedText>
+      )}
+
+      {formState.step === 2 && cooldown > 0 && (
+        <ThemedText className="mt-6 text-center text-sm">{i18n.t('resendEmailIn', { sec: cooldown })}</ThemedText>
+      )}
+      {formState.step === 2 && cooldown <= 0 && (
+        <CustomButton
+          label={i18n.t('resendEmail')}
+          variant="text"
+          className="mt-3"
+          labelStyle="text-sm"
+          onPress={handleResendVerification}
+        />
       )}
     </AuthWrapper>
   )

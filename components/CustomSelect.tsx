@@ -51,7 +51,7 @@ const CustomSelect = ({
         render={({ field: { onChange, value } }) => (
           <>
             <Pressable
-              className={`h-12 inline-flex justify-center rounded-lg px-4 ${isDarkTheme ? 'bg-shark-800' : 'bg-shark-100'}`}
+              className={`inline-flex h-12 justify-center rounded-lg px-4 ${isDarkTheme ? 'bg-shark-800' : 'bg-shark-100'}`}
               onPress={togglePicker}
             >
               <ThemedText className={!value ? 'text-shark-300' : ''}>
