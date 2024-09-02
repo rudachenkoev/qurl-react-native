@@ -1,3 +1,4 @@
+import { useTheme } from '@/contexts/ThemeContext'
 import { styled } from 'nativewind'
 import { useEffect } from 'react'
 import Animated, {
@@ -19,6 +20,7 @@ export interface GlowingDotProps {
 const Dot = styled(Animated.View)
 
 const GlowingDot = ({ left, top, size, delay = 500 }: GlowingDotProps) => {
+  const { isDarkTheme } = useTheme()
   const opacity = useSharedValue(1)
 
   useEffect(() => {
@@ -33,7 +35,7 @@ const GlowingDot = ({ left, top, size, delay = 500 }: GlowingDotProps) => {
         true
       )
     )
-  }, [delay, opacity])
+  }, [delay])
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value
@@ -41,7 +43,7 @@ const GlowingDot = ({ left, top, size, delay = 500 }: GlowingDotProps) => {
 
   return (
     <Dot
-      className="absolute rounded-full bg-white"
+      className={`absolute rounded-full ${isDarkTheme ? 'bg-shark-200/20' : 'bg-shark-200'}`}
       style={[
         {
           left: left,

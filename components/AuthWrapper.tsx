@@ -1,12 +1,10 @@
 import Logo from '@/assets/images/favicon.png'
 import GlowingDot, { GlowingDotProps } from '@/components/GlowingDot'
-import { styled } from 'nativewind'
+import ThemedCard from '@/components/ThemedCard'
+import ThemedText from '@/components/ThemedText'
+import { useTheme } from '@/contexts/ThemeContext'
 import { ReactNode, useCallback, useMemo, useState } from 'react'
-import { Image, LayoutChangeEvent, SafeAreaView, Text, View } from 'react-native'
-
-const StyledView = styled(View)
-const StyledText = styled(Text)
-const StyledSafeAreaView = styled(SafeAreaView)
+import { Image, LayoutChangeEvent, SafeAreaView, View } from 'react-native'
 
 interface AuthWrapperProps {
   title?: string
@@ -15,6 +13,8 @@ interface AuthWrapperProps {
 }
 
 const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
+  const { isDarkTheme } = useTheme()
+
   const dots: GlowingDotProps[] = useMemo(
     () => [
       { left: 20, top: 10, size: 6 },
@@ -51,9 +51,9 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
         {Array.from({ length: numberOfLines }).map(
           (_, index) =>
             index > 0 && (
-              <StyledView
+              <View
                 key={`horizontal-grid-line-${index}`}
-                className="absolute h-px w-full bg-neutral-100/20"
+                className={`absolute h-px w-full ${isDarkTheme ? 'bg-shark-200/20' : 'bg-shark-200'}`}
                 style={{ top: `${(index / numberOfLines) * 100}%` }}
               />
             )
@@ -61,20 +61,20 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
         {Array.from({ length: numberOfLines }).map(
           (_, index) =>
             index > 0 && (
-              <StyledView
+              <View
                 key={`vertical-grid-line-${index}`}
-                className="absolute h-full w-px bg-neutral-100/20"
+                className={`absolute h-full w-px ${isDarkTheme ? 'bg-shark-200/20' : 'bg-shark-200'}`}
                 style={{ left: `${(index / numberOfLines) * 100}%` }}
               />
             )
         )}
       </>
     )
-  }, [numberOfLines])
+  }, [numberOfLines, isDarkTheme])
 
   return (
-    <StyledView className="flex-1">
-      <StyledView className="bg-primary-500 relative flex-1 dark:bg-slate-950" onLayout={handleLayout}>
+    <View className="flex-1">
+      <View className={`relative flex-1 ${isDarkTheme ? 'bg-shark-950' : 'bg-shark-50'}`} onLayout={handleLayout}>
         {renderGridLines}
         {dots.map((dot, index) => (
           <GlowingDot
@@ -85,21 +85,21 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
             delay={index * 500}
           />
         ))}
-      </StyledView>
-      <StyledView className="bg-secondary-50 flex-1 dark:bg-slate-950" />
-      <StyledSafeAreaView className="absolute inset-x-0 top-0">
-        <StyledView className="p-8">
-          <StyledView className="flex items-center">
+      </View>
+      <View className={`flex-1 ${isDarkTheme ? 'bg-shark-950' : 'bg-shark-50'}`} />
+      <SafeAreaView className="absolute inset-x-0 top-0">
+        <View className="p-8">
+          <View className="flex items-center">
             <Image source={Logo} />
-            <StyledText className="my-6 text-center text-4xl font-bold text-white">{title}</StyledText>
-            <StyledText className="text-center text-white">{subtitle}</StyledText>
-          </StyledView>
-          <StyledView className="mt-8 gap-y-4 rounded-lg bg-white p-4 shadow dark:bg-zinc-700 dark:shadow-neutral-800">
-            {children}
-          </StyledView>
-        </StyledView>
-      </StyledSafeAreaView>
-    </StyledView>
+            <ThemedText type="title" className="my-6">
+              {title}
+            </ThemedText>
+            <ThemedText type="subtitle">{subtitle}</ThemedText>
+          </View>
+          <ThemedCard className="mt-8">{children}</ThemedCard>
+        </View>
+      </SafeAreaView>
+    </View>
   )
 }
 
