@@ -1,7 +1,7 @@
 import CustomIcon from '@/components/CustomIcon'
 import { styled } from 'nativewind'
 import { useMemo } from 'react'
-import { Animated, TouchableOpacity, View, ViewStyle } from 'react-native'
+import { Animated, Pressable, View, ViewStyle } from 'react-native'
 
 interface PasswordVisibilityProps {
   value: boolean
@@ -33,12 +33,12 @@ const PasswordVisibility = ({ value, onChangeValue, color = '#737373' }: Passwor
   }
 
   return (
-    <TouchableOpacity onPress={toggleCrossedOut} activeOpacity={1}>
+    <Pressable onPress={toggleCrossedOut} activeOpacity={1}>
       <StyledView className="ml-3 flex items-center justify-center">
         <CustomIcon icon="eye-outline" color={color} />
         <Animated.View style={lineStyle} />
       </StyledView>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 

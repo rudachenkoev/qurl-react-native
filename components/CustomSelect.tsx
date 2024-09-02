@@ -6,7 +6,7 @@ import { CustomSelectProps } from '@/types/type'
 import { Picker } from '@react-native-picker/picker'
 import { useState } from 'react'
 import { Controller } from 'react-hook-form'
-import { Modal, TouchableOpacity, View } from 'react-native'
+import { Modal, Pressable, View } from 'react-native'
 
 const CustomSelect = ({
   name,
@@ -45,14 +45,14 @@ const CustomSelect = ({
         rules={rules}
         render={({ field: { onChange, value } }) => (
           <>
-            <TouchableOpacity
+            <Pressable
               className="inline-flex h-12 justify-center rounded-lg border border-shark-400 px-4"
               onPress={() => setPickerVisible(true)}
             >
               <ThemedText className={!value ? 'text-shark-300' : ''}>
                 {getSelectedValue(value) || placeholder || label}
               </ThemedText>
-            </TouchableOpacity>
+            </Pressable>
 
             <Modal
               visible={isPickerVisible}

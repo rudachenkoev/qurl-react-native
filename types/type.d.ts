@@ -1,6 +1,6 @@
 import { IconProps } from '@expo/vector-icons/build/createIconSet'
 import { Control, FieldError, FieldName, RegisterOptions } from 'react-hook-form'
-import { ImageSourcePropType, TextInputProps, TouchableOpacityProps } from 'react-native'
+import { ImageSourcePropType, TextInputProps, PressableProps } from 'react-native'
 
 export type VariantType = 'default' | 'outlined' | 'text'
 export type ColorType = 'primary' | 'secondary'
@@ -60,7 +60,7 @@ declare interface CustomSelectProps {
   errorStyle?: string
 }
 
-declare interface CustomButtonProps extends TouchableOpacityProps {
+declare interface CustomButtonProps extends PressableProps {
   label: string
   appendIcon?: CustomIconProps
   prependIcon?: CustomIconProps
