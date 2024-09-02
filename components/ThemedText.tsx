@@ -1,8 +1,5 @@
 import { useTheme } from '@/contexts/ThemeContext'
-import { styled } from 'nativewind'
 import { Text, TextProps } from 'react-native'
-
-const StyledText = styled(Text)
 
 interface ThemedTextProps extends TextProps {
   type?: 'default' | 'title' | 'subtitle' | 'label'
@@ -26,7 +23,7 @@ const ThemedText = ({ type = 'default', className, ...rest }: ThemedTextProps) =
   }
 
   return (
-    <StyledText
+    <Text
       className={`${isDarkTheme ? 'text-shark-50' : 'text-shark-950'} ${getThemeTextStyle()} ${className}`}
       {...rest}
     />

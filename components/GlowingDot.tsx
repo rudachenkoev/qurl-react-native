@@ -1,5 +1,4 @@
 import { useTheme } from '@/contexts/ThemeContext'
-import { styled } from 'nativewind'
 import { useEffect } from 'react'
 import Animated, {
   Easing,
@@ -16,8 +15,6 @@ export interface GlowingDotProps {
   size: number
   delay?: number
 }
-
-const Dot = styled(Animated.View)
 
 const GlowingDot = ({ left, top, size, delay = 500 }: GlowingDotProps) => {
   const { isDarkTheme } = useTheme()
@@ -42,7 +39,7 @@ const GlowingDot = ({ left, top, size, delay = 500 }: GlowingDotProps) => {
   }))
 
   return (
-    <Dot
+    <Animated.View
       className={`absolute rounded-full ${isDarkTheme ? 'bg-shark-200/20' : 'bg-shark-200'}`}
       style={[
         {
