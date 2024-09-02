@@ -32,6 +32,7 @@ declare interface CustomOTPInputProps {
   control: Control<any>
   error?: FieldError
   // Style props
+  wrapperStyle?: string
   labelStyle?: string
   containerStyle?: string
   inputStyle?: string
