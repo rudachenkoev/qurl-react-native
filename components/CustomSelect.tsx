@@ -18,7 +18,7 @@ const CustomSelect = ({
   labelStyle,
   options,
   placeholder,
-  containerStyle,
+  wrapperStyle,
   optionValue = 'id',
   optionLabel = 'name',
   onSelect
@@ -32,7 +32,7 @@ const CustomSelect = ({
   }
 
   return (
-    <View className={containerStyle}>
+    <View className={wrapperStyle}>
       {label ? (
         <ThemedText type="label" className={`mb-1 px-2 ${labelStyle}`}>
           {label}

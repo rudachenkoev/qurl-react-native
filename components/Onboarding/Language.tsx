@@ -33,7 +33,7 @@ const OnboardingWelcome = ({ control }: OnboardingLanguageProps) => {
           options={locales}
           name="locale"
           control={control}
-          containerStyle="mt-3"
+          wrapperStyle="mt-3"
           onSelect={handleLanguageChange}
         />
       </ThemedCard>

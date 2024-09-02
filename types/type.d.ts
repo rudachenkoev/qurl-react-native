@@ -16,6 +16,7 @@ declare interface CustomInputProps extends TextInputProps {
   control: Control<any>
   error?: FieldError
   // Style props
+  wrapperStyle?: string
   labelStyle?: string
   containerStyle?: string
   inputStyle?: string
@@ -56,7 +57,7 @@ declare interface CustomSelectProps {
   error?: FieldError
   // Style props
   labelStyle?: string
-  containerStyle?: string
+  wrapperStyle?: string
   errorStyle?: string
 }
 

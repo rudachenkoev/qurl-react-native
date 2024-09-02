@@ -32,7 +32,7 @@ const OnboardingTheme = ({ control }: OnboardingThemeProps) => {
           options={themes.map(theme => ({ id: theme, name: i18n.t(`theme.${theme}`) }))}
           name="theme"
           control={control}
-          containerStyle="mt-3"
+          wrapperStyle="mt-3"
           onSelect={handleThemeChange}
         />
       </ThemedCard>

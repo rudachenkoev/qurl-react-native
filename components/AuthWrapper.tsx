@@ -91,12 +91,14 @@ const AuthWrapper = ({ title, subtitle, children }: AuthWrapperProps) => {
         <View className="p-8">
           <View className="flex items-center">
             <Image source={Logo} />
-            <ThemedText type="title" className="my-6">
+            <ThemedText type="title" className="my-4 text-center">
               {title}
             </ThemedText>
-            <ThemedText type="subtitle">{subtitle}</ThemedText>
+            <ThemedText type="subtitle" className="text-center">
+              {subtitle}
+            </ThemedText>
           </View>
-          <ThemedCard className="mt-8">{children}</ThemedCard>
+          <ThemedCard className="mt-6">{children}</ThemedCard>
         </View>
       </SafeAreaView>
     </View>

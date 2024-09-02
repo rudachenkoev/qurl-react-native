@@ -2,17 +2,13 @@ import GoogleLogo from '@/assets/icons/google.png'
 import AuthWrapper from '@/components/AuthWrapper'
 import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
+import ThemedLink from '@/components/ThemedLink'
+import ThemedText from '@/components/ThemedText'
 import axios from '@/libs/axios'
 import { i18n } from '@/libs/i18n'
 import { validateEmail } from '@/utils/validation'
-import { Link } from 'expo-router'
-import { styled } from 'nativewind'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Text } from 'react-native'
-
-const StyledLink = styled(Link)
-const StyledText = styled(Text)
 
 interface SignInFormData {
   email: string
@@ -32,17 +28,23 @@ const SignIn = () => {
       password: ''
     }
   })
-  const onSubmit: SubmitHandler<SignInFormData> = async data => {
+
+  const onSubmit: SubmitHandler<SignInFormData> = useCallback(async data => {
     try {
       setFormState(prev => ({ ...prev, loading: true }))
       await axios.post('api/v1/auth/login/', data)
       alert('Successful authorization')
     } catch (err) {
       console.log('Authorization error', err)
+      alert('Failed to authorize. Please try again.')
     } finally {
       setFormState(prev => ({ ...prev, loading: false }))
     }
-  }
+  }, [])
+
+  const handleGoogleSignIn = useCallback(() => {
+    alert('Sign in with Google')
+  }, [])
 
   return (
     <AuthWrapper title={i18n.t('signInToYourAccount')} subtitle={i18n.t('createAccountOrLogIn')}>
@@ -69,18 +71,24 @@ const SignIn = () => {
         secureTextEntry={true}
         autoCapitalize="none"
         autoCorrect={false}
+        wrapperStyle="mt-3"
       />
-      <CustomButton label={i18n.t('signIn')} loading={formState.loading} onPress={handleSubmit(onSubmit)} />
+      <CustomButton
+        label={i18n.t('signIn')}
+        loading={formState.loading}
+        className="mt-3"
+        onPress={handleSubmit(onSubmit)}
+      />
       <CustomButton
         label={i18n.t('signInWithGoogle')}
         variant="outlined"
+        className="mt-3"
         prependIcon={{ source: GoogleLogo, style: 'mr-3' }}
-        onPress={() => alert('Button Pressed!')}
+        onPress={handleGoogleSignIn}
       />
-      <StyledLink href="/sign-up" className="mt-3 text-center text-sm text-neutral-950 dark:text-neutral-100">
-        {i18n.t('dontHaveAnAccount')}{' '}
-        <StyledText className="text-primary-500 dark:text-slate-950">{i18n.t('signUp')}</StyledText>
-      </StyledLink>
+      <ThemedText className="mt-6 text-center text-sm">
+        {i18n.t('dontHaveAnAccount')} <ThemedLink href="/sign-up">{i18n.t('signUp')}</ThemedLink>
+      </ThemedText>
     </AuthWrapper>
   )
 }
