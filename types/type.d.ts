@@ -1,9 +1,9 @@
 import { IconProps } from '@expo/vector-icons/build/createIconSet'
 import { Control, FieldError, FieldName, RegisterOptions } from 'react-hook-form'
-import { ImageSourcePropType, TextInputProps, TouchableOpacityProps } from 'react-native'
+import { ImageSourcePropType, PressableProps, TextInputProps } from 'react-native'
 
-export type VariantType = 'default' | 'outlined'
-export type ColorType = 'primary' | 'secondary' | 'success' | 'error'
+export type VariantType = 'default' | 'outlined' | 'text'
+export type ColorType = 'primary' | 'secondary'
 export type LanguageType = 'en' | 'uk'
 
 declare interface CustomInputProps extends TextInputProps {
@@ -16,6 +16,7 @@ declare interface CustomInputProps extends TextInputProps {
   control: Control<any>
   error?: FieldError
   // Style props
+  wrapperStyle?: string
   labelStyle?: string
   containerStyle?: string
   inputStyle?: string
@@ -31,13 +32,37 @@ declare interface CustomOTPInputProps {
   control: Control<any>
   error?: FieldError
   // Style props
+  wrapperStyle?: string
   labelStyle?: string
   containerStyle?: string
   inputStyle?: string
   errorStyle?: string
 }
 
-declare interface CustomButtonProps extends TouchableOpacityProps {
+declare interface Option {
+  id: string | number
+  name: string
+  [key: string]: any
+}
+declare interface CustomSelectProps {
+  label?: string
+  placeholder?: string
+  options: Option[]
+  optionValue?: string
+  optionLabel?: string
+  onSelect?: (optionValue: string | number) => void
+  // Validation
+  name: FieldName
+  rules?: RegisterOptions
+  control: Control<any>
+  error?: FieldError
+  // Style props
+  labelStyle?: string
+  wrapperStyle?: string
+  errorStyle?: string
+}
+
+declare interface CustomButtonProps extends PressableProps {
   label: string
   appendIcon?: CustomIconProps
   prependIcon?: CustomIconProps

@@ -1,10 +1,8 @@
+import ThemedText from '@/components/ThemedText'
 import { i18n } from '@/libs/i18n'
-import { styled } from 'nativewind'
 import { useEffect, useRef } from 'react'
 import { FieldError } from 'react-hook-form'
-import { Animated, Text } from 'react-native'
-
-const StyledText = styled(Text)
+import { Animated } from 'react-native'
 
 interface MessageProps {
   type?: 'default' | 'error'
@@ -21,11 +19,11 @@ const Message = ({ type = 'default', message, messageStyle = '' }: MessageProps)
       duration: 300,
       useNativeDriver: true
     }).start()
+
+    return () => slideAnim.stopAnimation()
   }, [message, slideAnim])
 
-  const getMessageStyle = () => {
-    return type === 'error' ? 'text-error-500' : ''
-  }
+  const getMessageStyle = () => (type === 'error' ? 'text-red-orange-500' : '')
 
   const getMessageText = () => {
     if (typeof message === 'string') return message
@@ -49,7 +47,7 @@ const Message = ({ type = 'default', message, messageStyle = '' }: MessageProps)
         opacity: slideAnim
       }}
     >
-      <StyledText className={`px-2 text-xs ${getMessageStyle()} ${messageStyle}`}>{messageText}</StyledText>
+      <ThemedText className={`px-2 text-xs ${getMessageStyle()} ${messageStyle}`}>{messageText}</ThemedText>
     </Animated.View>
   ) : null
 }

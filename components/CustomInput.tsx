@@ -1,24 +1,13 @@
 import CustomIcon from '@/components/CustomIcon'
 import Message from '@/components/Message'
 import PasswordVisibility from '@/components/PasswordVisibility'
+import ThemedText from '@/components/ThemedText'
+import colors from '@/constants/colors'
+import { useTheme } from '@/contexts/ThemeContext'
 import { CustomInputProps } from '@/types/type'
-import { styled } from 'nativewind'
 import { useState } from 'react'
 import { Controller } from 'react-hook-form'
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  Text,
-  TextInput,
-  View,
-  useColorScheme
-} from 'react-native'
-
-const StyledView = styled(View)
-const StyledText = styled(Text)
-const StyledTextInput = styled(TextInput)
+import { Keyboard, KeyboardAvoidingView, Platform, Pressable, TextInput, View } from 'react-native'
 
 const CustomInput = ({
   name,
@@ -35,8 +24,11 @@ const CustomInput = ({
   placeholder,
   textContentType = 'none',
   secureTextEntry = false,
+  wrapperStyle,
   ...props
 }: CustomInputProps) => {
+  const { isDarkTheme } = useTheme()
+
   const [isSecure, setIsSecure] = useState(secureTextEntry)
 
   const renderAppendIcon = () => {
@@ -45,19 +37,17 @@ const CustomInput = ({
     else return null
   }
 
-  const selectionColor = useColorScheme() === 'dark' ? '#f5f5f5' : '#0a0a0a'
-
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className={wrapperStyle}>
       <Pressable onPress={() => Keyboard.dismiss()}>
         {label ? (
-          <StyledText className={`mb-1 px-2 text-sm text-neutral-950 dark:text-neutral-100 ${labelStyle}`}>
+          <ThemedText type="label" className={`mb-1 px-2 ${labelStyle}`}>
             {label}
-          </StyledText>
+          </ThemedText>
         ) : null}
 
-        <StyledView
-          className={`flex h-12 w-full flex-row items-center justify-start rounded-lg bg-neutral-100 px-4 dark:bg-zinc-800 ${containerStyle}`}
+        <View
+          className={`h-12 w-full flex-row items-center justify-start rounded-lg px-4 ${isDarkTheme ? 'bg-shark-800' : 'bg-shark-100'} ${containerStyle}`}
         >
           {prependIcon && <CustomIcon {...prependIcon} />}
 
@@ -66,11 +56,12 @@ const CustomInput = ({
             name={name}
             rules={rules}
             render={({ field: { onChange, onBlur, value } }) => (
-              <StyledTextInput
-                className={`h-full flex-1 text-neutral-950 dark:text-neutral-100 ${inputStyle}`}
+              <TextInput
+                className={`h-full flex-1 font-NunitoRegular ${isDarkTheme ? 'text-shark-50' : 'text-shark-950'} ${inputStyle}`}
                 placeholder={placeholder || label}
-                placeholderTextColor="#b0b0b0"
+                placeholderTextColor={colors.shark[300]}
                 textContentType={textContentType}
+                selectionColor={isDarkTheme ? colors.shark[50] : colors.shark[950]}
                 secureTextEntry={isSecure}
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -81,7 +72,7 @@ const CustomInput = ({
           />
 
           {renderAppendIcon()}
-        </StyledView>
+        </View>
 
         {error && <Message type="error" message={error} messageStyle={`mt-1 ${errorStyle}`} />}
       </Pressable>

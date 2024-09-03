@@ -2,17 +2,14 @@ import AuthWrapper from '@/components/AuthWrapper'
 import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
 import CustomOTPInput from '@/components/CustomOTPInput'
+import ThemedLink from '@/components/ThemedLink'
+import ThemedText from '@/components/ThemedText'
+import { useTheme } from '@/contexts/ThemeContext'
 import axios from '@/libs/axios'
 import { i18n } from '@/libs/i18n'
 import { validateEmail, validatePassword } from '@/utils/validation'
-import { Link } from 'expo-router'
-import { styled } from 'nativewind'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Text } from 'react-native'
-
-const StyledLink = styled(Link)
-const StyledText = styled(Text)
 
 interface SignUpFormData {
   email: string
@@ -21,7 +18,10 @@ interface SignUpFormData {
 }
 
 const SignUp = () => {
+  const { isDarkTheme } = useTheme()
+
   const [formState, setFormState] = useState({ step: 1, loading: false })
+  const [cooldown, setCooldown] = useState(0)
 
   const {
     control,
@@ -36,27 +36,44 @@ const SignUp = () => {
     }
   })
 
-  const onSubmit: SubmitHandler<SignUpFormData> = async data => {
-    if (formState.step === 1) await createVerificationRequest(data)
-    else await confirmVerificationRequest(data)
-  }
-
-  const createVerificationRequest = async (data: SignUpFormData) => {
-    try {
-      setFormState(prev => ({ ...prev, loading: true }))
-      await axios.post('api/v1/auth/registration-requests/', {
-        email: data.email,
-        password: data.password
-      })
-      setFormState(prev => ({ ...prev, step: 2 }))
-    } catch (err) {
-      console.log('Verification request sending error', err)
-    } finally {
-      setFormState(prev => ({ ...prev, loading: false }))
+  useEffect(() => {
+    let timer: NodeJS.Timeout
+    if (cooldown > 0) {
+      timer = setTimeout(() => setCooldown(cooldown - 1), 1000)
     }
-  }
+    return () => clearTimeout(timer)
+  }, [cooldown])
 
-  const confirmVerificationRequest = async (data: SignUpFormData) => {
+  const onSubmit: SubmitHandler<SignUpFormData> = useCallback(
+    data => {
+      if (formState.step === 1) createVerificationRequest(data.email, data.password)
+      else confirmVerificationRequest(data)
+    },
+    [formState.step]
+  )
+
+  const createVerificationRequest = useCallback(
+    async (email: string, password: string) => {
+      if (cooldown > 0) return // Prevent sending if cooldown is active
+
+      try {
+        setFormState(prev => ({ ...prev, loading: true }))
+        await axios.post('api/v1/auth/registration-requests/', {
+          email,
+          password
+        })
+        setFormState(prev => ({ ...prev, step: 2 }))
+        setCooldown(30) // Start cooldown for 30 seconds
+      } catch (err) {
+        console.log('Verification request sending error', err)
+      } finally {
+        setFormState(prev => ({ ...prev, loading: false }))
+      }
+    },
+    [cooldown]
+  )
+
+  const confirmVerificationRequest = useCallback(async (data: SignUpFormData) => {
     try {
       setFormState(prev => ({ ...prev, loading: true }))
       await axios.post('api/v1/auth/registration-requests/confirmation/', {
@@ -69,7 +86,12 @@ const SignUp = () => {
     } finally {
       setFormState(prev => ({ ...prev, loading: false }))
     }
-  }
+  }, [])
+
+  const handleResendVerification = useCallback(() => {
+    const { email, password } = getValues()
+    createVerificationRequest(email, password)
+  }, [createVerificationRequest, getValues])
 
   return (
     <AuthWrapper title={i18n.t('signUp')} subtitle={i18n.t('createAnAccountToContinue')}>
@@ -99,25 +121,28 @@ const SignUp = () => {
             autoCapitalize="none"
             autoCorrect={false}
             passwordRules="required: lower; required: upper; required: digit;"
+            wrapperStyle="mt-3"
           />
         </>
       )}
       {formState.step === 2 && (
         <>
-          <StyledText className="text-base text-neutral-950 dark:text-neutral-100">
+          <ThemedText>
             {i18n.tsx('sentVerificationEmail', {
               email: (
-                <StyledText className="font-medium text-primary-500 dark:text-slate-950">
+                <ThemedText
+                  className={`font-NunitoSemiBold underline ${isDarkTheme ? 'text-shark-300' : 'text-shark-800'}`}
+                >
                   {getValues('email')}
-                </StyledText>
+                </ThemedText>
               )
             })}
-          </StyledText>
+          </ThemedText>
           <CustomOTPInput
             name="verificationCode"
             control={control}
+            wrapperStyle="mt-3"
             rules={{ required: true, minLength: 6, maxLength: 6 }}
-            error={errors.verificationCode}
           />
         </>
       )}
@@ -125,14 +150,27 @@ const SignUp = () => {
       <CustomButton
         label={i18n.t(formState.step === 1 ? 'sendVerificationCode' : 'signUp')}
         loading={formState.loading}
+        className="mt-3"
         onPress={handleSubmit(onSubmit)}
       />
 
       {formState.step === 1 && (
-        <StyledLink href="/sign-in" className="mt-3 text-center text-sm text-neutral-950 dark:text-neutral-100">
-          {i18n.t('alreadyHaveAnAccount')}{' '}
-          <StyledText className="text-primary-500 dark:text-slate-950">{i18n.t('signIn')}</StyledText>
-        </StyledLink>
+        <ThemedText className="mt-6 text-center text-sm">
+          {i18n.t('alreadyHaveAnAccount')} <ThemedLink href="/sign-in">{i18n.t('signIn')}</ThemedLink>
+        </ThemedText>
+      )}
+
+      {formState.step === 2 && cooldown > 0 && (
+        <ThemedText className="mt-6 text-center text-sm">{i18n.t('resendEmailIn', { sec: cooldown })}</ThemedText>
+      )}
+      {formState.step === 2 && cooldown <= 0 && (
+        <CustomButton
+          label={i18n.t('resendEmail')}
+          variant="text"
+          className="mt-3"
+          labelStyle="text-sm"
+          onPress={handleResendVerification}
+        />
       )}
     </AuthWrapper>
   )
