@@ -54,8 +54,6 @@ const SignUp = () => {
 
   const createVerificationRequest = useCallback(
     async (email: string, password: string) => {
-      if (cooldown > 0) return // Prevent sending if cooldown is active
-
       try {
         setFormState(prev => ({ ...prev, loading: true }))
         await axios.post('api/v1/auth/registration-requests/', {
@@ -63,7 +61,7 @@ const SignUp = () => {
           password
         })
         setFormState(prev => ({ ...prev, step: 2 }))
-        setCooldown(30) // Start cooldown for 30 seconds
+        setCooldown(30)
       } catch (err) {
         console.log('Verification request sending error', err)
       } finally {
@@ -72,6 +70,12 @@ const SignUp = () => {
     },
     [cooldown]
   )
+
+  const handleResendVerification = useCallback(() => {
+    if (cooldown > 0) return
+    const { email, password } = getValues()
+    createVerificationRequest(email, password)
+  }, [createVerificationRequest, getValues])
 
   const confirmVerificationRequest = useCallback(async (data: SignUpFormData) => {
     try {
@@ -87,11 +91,6 @@ const SignUp = () => {
       setFormState(prev => ({ ...prev, loading: false }))
     }
   }, [])
-
-  const handleResendVerification = useCallback(() => {
-    const { email, password } = getValues()
-    createVerificationRequest(email, password)
-  }, [createVerificationRequest, getValues])
 
   return (
     <AuthWrapper title={i18n.t('signUp')} subtitle={i18n.t('createAnAccountToContinue')}>
@@ -158,6 +157,14 @@ const SignUp = () => {
         <ThemedText className="mt-6 text-center text-sm">
           {i18n.t('alreadyHaveAnAccount')} <ThemedLink href="/sign-in">{i18n.t('signIn')}</ThemedLink>
         </ThemedText>
+      )}
+      {formState.step === 2 && (
+        <CustomButton
+          label={i18n.t('changeEmail')}
+          variant="outlined"
+          className="mt-3"
+          onPress={() => setFormState(prev => ({ ...prev, step: 1 }))}
+        />
       )}
 
       {formState.step === 2 && cooldown > 0 && (
