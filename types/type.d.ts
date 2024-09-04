@@ -1,10 +1,10 @@
 import { IconProps } from '@expo/vector-icons/build/createIconSet'
+import { FunctionComponent } from 'react'
 import { Control, FieldError, FieldName, RegisterOptions } from 'react-hook-form'
 import { ImageSourcePropType, PressableProps, TextInputProps } from 'react-native'
 
 export type VariantType = 'default' | 'outlined' | 'text'
 export type ColorType = 'primary' | 'secondary'
-export type LanguageType = 'en' | 'uk'
 
 declare interface CustomInputProps extends TextInputProps {
   label?: string
@@ -82,9 +82,16 @@ type CustomIconPropsBase = {
 type CustomIconPropsWithIcon = CustomIconPropsBase & {
   icon: IconProps['name']
   source?: never
+  svgSource?: never
 }
 type CustomIconPropsWithSource = CustomIconPropsBase & {
   icon?: never
   source: ImageSourcePropType
+  svgSource?: never
 }
-declare type CustomIconProps = CustomIconPropsWithIcon | CustomIconPropsWithSource
+type CustomIconPropsWithSvgSource = CustomIconPropsBase & {
+  icon?: never
+  source?: never
+  svgSource: FunctionComponent<SVGProps<SVGSVGElement>>
+}
+declare type CustomIconProps = CustomIconPropsWithIcon | CustomIconPropsWithSource | CustomIconPropsWithSvgSource

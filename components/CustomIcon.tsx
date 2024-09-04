@@ -3,12 +3,23 @@ import { CustomIconProps } from '@/types/type'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { Image } from 'react-native'
 
-const CustomIcon = ({ icon, source, color = colors.shark[950], size = 24, style, ...props }: CustomIconProps) => {
+const CustomIcon = ({
+  icon,
+  source,
+  svgSource,
+  color = colors.shark[950],
+  size = 24,
+  style,
+  ...props
+}: CustomIconProps) => {
   const renderIcon = () => {
     if (icon) {
       return <Ionicons name={icon} color={color} size={size} className={style} {...props} />
     } else if (source) {
       return <Image source={source} style={[{ width: size, height: size }]} className={style} {...props} />
+    } else if (svgSource) {
+      const SvgIcon = svgSource
+      return <SvgIcon width={size} height={size} fill={color} className={style} {...props} />
     }
     return null
   }

@@ -1,4 +1,4 @@
-import GoogleLogo from '@/assets/icons/google.png'
+import GoogleLogo from '@/assets/icons/GoogleLogo'
 import AuthWrapper from '@/components/AuthWrapper'
 import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
@@ -83,7 +83,7 @@ const SignIn = () => {
         label={i18n.t('signInWithGoogle')}
         variant="outlined"
         className="mt-3"
-        prependIcon={{ source: GoogleLogo, style: 'mr-3' }}
+        prependIcon={{ svgSource: GoogleLogo, size: 19, style: 'mr-3' }}
         onPress={handleGoogleSignIn}
       />
       <ThemedText className="mt-6 text-center text-sm">
