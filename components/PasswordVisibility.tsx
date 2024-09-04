@@ -31,7 +31,7 @@ const PasswordVisibility = ({ value, onChangeValue, color = colors.shark[400] }:
   }
 
   return (
-    <Pressable onPress={toggleCrossedOut} activeOpacity={1}>
+    <Pressable onPress={toggleCrossedOut}>
       <View className="ml-3 flex items-center justify-center">
         <CustomIcon icon="eye-outline" color={color} />
         <Animated.View style={lineStyle} />
