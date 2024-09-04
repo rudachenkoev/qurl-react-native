@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Svg, { Path, SvgProps } from 'react-native-svg'
 const SvgComponent = (props: SvgProps) => (
-  <Svg xmlns="http://www.w3.org/2000/svg" width={props.width || 19} height={props.height || 18} fill="none" {...props}>
+  <Svg width={props.width || 19} height={props.height || 18} fill="none" {...props}>
     <Path
       fill="#4285F4"
       d="M17.376 9.175c0-.648-.054-1.12-.17-1.61H9.662v2.922h4.428c-.09.727-.571 1.82-1.643 2.555l-.015.098 2.386 1.811.165.016c1.518-1.373 2.393-3.395 2.393-5.792Z"
