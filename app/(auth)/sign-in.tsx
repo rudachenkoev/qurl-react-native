@@ -4,9 +4,11 @@ import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
 import ThemedLink from '@/components/ThemedLink'
 import ThemedText from '@/components/ThemedText'
+import { useAuth } from '@/contexts/AuthContext'
 import axios from '@/libs/axios'
 import { i18n } from '@/libs/i18n'
 import { validateEmail } from '@/utils/validation'
+import { router } from 'expo-router'
 import { useCallback, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
@@ -29,14 +31,15 @@ const SignIn = () => {
     }
   })
 
+  const { updateToken } = useAuth()
   const onSubmit: SubmitHandler<SignInFormData> = useCallback(async data => {
     try {
       setFormState(prev => ({ ...prev, loading: true }))
-      await axios.post('api/v1/auth/login/', data)
-      alert('Successful authorization')
+      const response = await axios.post('api/v1/auth/login/', data)
+      await updateToken(response.data.bearer)
+      router.replace('/(root)/home')
     } catch (err) {
       console.log('Authorization error', err)
-      alert('Failed to authorize. Please try again.')
     } finally {
       setFormState(prev => ({ ...prev, loading: false }))
     }

@@ -1,3 +1,4 @@
+import { AuthProvider, useAuth } from '@/contexts/AuthContext'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { useFonts } from 'expo-font'
 import { Stack } from 'expo-router'
@@ -8,7 +9,15 @@ import 'react-native-reanimated'
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
 
-export default function RootLayout() {
+export default function App() {
+  return (
+    <AuthProvider>
+      <RootLayout />
+    </AuthProvider>
+  )
+}
+
+function RootLayout() {
   const [loaded] = useFonts({
     'Nunito-Bold': require('../assets/fonts/Nunito-Bold.ttf'),
     'Nunito-BoldItalic': require('../assets/fonts/Nunito-BoldItalic.ttf'),
@@ -38,12 +47,23 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        {/*<Stack.Screen name="(root)" options={{ headerShown: false }} />*/}
-        <Stack.Screen name="+not-found" />
-      </Stack>
+      <AuthNavigator />
     </ThemeProvider>
+  )
+}
+
+function AuthNavigator() {
+  const { token } = useAuth()
+
+  return (
+    <Stack>
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      {token ? (
+        <Stack.Screen name="(root)" options={{ headerShown: false }} />
+      ) : (
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      )}
+      <Stack.Screen name="+not-found" />
+    </Stack>
   )
 }

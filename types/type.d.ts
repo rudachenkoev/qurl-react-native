@@ -1,5 +1,5 @@
 import { IconProps } from '@expo/vector-icons/build/createIconSet'
-import { FunctionComponent } from 'react'
+import { FC } from 'react'
 import { Control, FieldError, FieldName, RegisterOptions } from 'react-hook-form'
 import { ImageSourcePropType, PressableProps, TextInputProps } from 'react-native'
 
@@ -92,6 +92,6 @@ type CustomIconPropsWithSource = CustomIconPropsBase & {
 type CustomIconPropsWithSvgSource = CustomIconPropsBase & {
   icon?: never
   source?: never
-  svgSource: FunctionComponent<SVGProps<SVGSVGElement>>
+  svgSource: FC<SVGProps<SVGSVGElement>>
 }
 declare type CustomIconProps = CustomIconPropsWithIcon | CustomIconPropsWithSource | CustomIconPropsWithSvgSource

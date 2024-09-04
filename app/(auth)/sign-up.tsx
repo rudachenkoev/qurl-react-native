@@ -4,10 +4,12 @@ import CustomInput from '@/components/CustomInput'
 import CustomOTPInput from '@/components/CustomOTPInput'
 import ThemedLink from '@/components/ThemedLink'
 import ThemedText from '@/components/ThemedText'
+import { useAuth } from '@/contexts/AuthContext'
 import { useTheme } from '@/contexts/ThemeContext'
 import axios from '@/libs/axios'
 import { i18n } from '@/libs/i18n'
 import { validateEmail, validatePassword } from '@/utils/validation'
+import { router } from 'expo-router'
 import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
@@ -77,14 +79,16 @@ const SignUp = () => {
     createVerificationRequest(email, password)
   }, [createVerificationRequest, getValues])
 
+  const { updateToken } = useAuth()
   const confirmVerificationRequest = useCallback(async (data: SignUpFormData) => {
     try {
       setFormState(prev => ({ ...prev, loading: true }))
-      await axios.post('api/v1/auth/registration-requests/confirmation/', {
+      const response = await axios.post('api/v1/auth/registration-requests/confirmation/', {
         email: data.email,
         verificationCode: data.verificationCode
       })
-      alert('Successful registration')
+      await updateToken(response.data.bearer)
+      router.replace('/(root)/home')
     } catch (err) {
       console.log('Verification request confirmation error', err)
     } finally {
