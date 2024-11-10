@@ -7,7 +7,7 @@ const Home = () => {
   const { removeToken } = useAuth()
   const handleLogout = async () => {
     await removeToken()
-    router.replace('/(auth)/onboarding')
+    router.replace('/(auth)/sign-in')
   }
 
   return (
