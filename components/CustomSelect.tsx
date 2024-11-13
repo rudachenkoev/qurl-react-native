@@ -1,3 +1,4 @@
+import CustomModal from '@/components/CustomModal'
 import Message from '@/components/Message'
 import ThemedText from '@/components/ThemedText'
 import colors from '@/constants/colors'
@@ -6,7 +7,7 @@ import { CustomSelectProps } from '@/types/type'
 import { Picker } from '@react-native-picker/picker'
 import { useCallback, useState } from 'react'
 import { Controller } from 'react-hook-form'
-import { Modal, Pressable, View } from 'react-native'
+import { Pressable, View } from 'react-native'
 
 const CustomSelect = ({
   name,
@@ -59,25 +60,21 @@ const CustomSelect = ({
               </ThemedText>
             </Pressable>
 
-            <Modal visible={isPickerVisible} transparent={true} animationType="slide" onRequestClose={togglePicker}>
-              <View className="flex-1 justify-end bg-shark-950/50">
-                <View className={`px-3 pb-6 pt-4 ${isDarkTheme ? 'bg-shark-900' : 'bg-shark-50'}`}>
-                  <Picker
-                    selectedValue={value}
-                    onValueChange={itemValue => {
-                      onChange(itemValue)
-                      togglePicker()
-                      onSelect && onSelect(itemValue)
-                    }}
-                    itemStyle={{ color: colors.shark[isDarkTheme ? 50 : 950] }}
-                  >
-                    {options.map(option => (
-                      <Picker.Item key={option[optionValue]} label={option[optionLabel]} value={option[optionValue]} />
-                    ))}
-                  </Picker>
-                </View>
-              </View>
-            </Modal>
+            <CustomModal visible={isPickerVisible} onRequestClose={togglePicker}>
+              <Picker
+                selectedValue={value}
+                onValueChange={itemValue => {
+                  onChange(itemValue)
+                  togglePicker()
+                  onSelect && onSelect(itemValue)
+                }}
+                itemStyle={{ color: colors.shark[isDarkTheme ? 50 : 950] }}
+              >
+                {options.map(option => (
+                  <Picker.Item key={option[optionValue]} label={option[optionLabel]} value={option[optionValue]} />
+                ))}
+              </Picker>
+            </CustomModal>
           </>
         )}
       />

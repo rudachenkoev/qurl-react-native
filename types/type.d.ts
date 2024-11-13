@@ -1,5 +1,5 @@
 import { IconProps } from '@expo/vector-icons/build/createIconSet'
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import { Control, FieldError, FieldName, RegisterOptions } from 'react-hook-form'
 import { ImageSourcePropType, PressableProps, TextInputProps } from 'react-native'
 
@@ -95,3 +95,11 @@ type CustomIconPropsWithSvgSource = CustomIconPropsBase & {
   svgSource: FC<SVGProps<SVGSVGElement>>
 }
 declare type CustomIconProps = CustomIconPropsWithIcon | CustomIconPropsWithSource | CustomIconPropsWithSvgSource
+
+declare interface CustomModalProps {
+  visible: boolean
+  onRequestClose?: () => void
+  children: ReactNode
+  // Style props
+  wrapperStyle?: string
+}
