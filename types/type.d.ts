@@ -103,3 +103,9 @@ declare interface CustomModalProps {
   // Style props
   wrapperStyle?: string
 }
+
+export type Contact = {
+  id: string
+  name: string
+  birthday: string
+}
