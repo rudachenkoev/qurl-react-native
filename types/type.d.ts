@@ -105,7 +105,7 @@ declare interface CustomModalProps {
 }
 
 export type Contact = {
-  id: string
+  id: string | undefined
   name: string
   birthday: string
 }

@@ -1,15 +1,9 @@
 import CustomButton from '@/components/CustomButton'
-import { Contact } from '@/types/type'
 import * as Contacts from 'expo-contacts'
+import { Contact } from '@/types/type'
 
 interface ContactsSyncProps {
   onSuccess?: (contacts: Contact[]) => void
-}
-
-interface Birthday {
-  year: number
-  month: number
-  day: number
 }
 
 const ContactsSync = ({ onSuccess }: ContactsSyncProps) => {
@@ -20,22 +14,24 @@ const ContactsSync = ({ onSuccess }: ContactsSyncProps) => {
         fields: [Contacts.Fields.Birthday, Contacts.Fields.Name]
       })
 
-      const contactsWithBirthday = data
-        .filter((contact): contact is Contacts.Contact & { id: string; birthday: Birthday } => {
-          return !!(contact.birthday && contact.id && contact.name)
-        })
+      const contacts = data
+        .filter(({ id, name }) => id && name)
         .map(({ id, name, birthday }) => {
-          const month = String(birthday.month + 1).padStart(2, '0')
-          const day = String(birthday.day).padStart(2, '0')
+          if (!birthday) {
+            return { id, name, birthday: '' }
+          }
+
+          const { year, month, day } = birthday
           return {
             id,
             name,
-            birthday: `${birthday.year}-${month}-${day}`
+            birthday: `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
           }
         })
 
+
       if (onSuccess) {
-        onSuccess(contactsWithBirthday)
+        onSuccess(contacts)
       }
     }
   }
