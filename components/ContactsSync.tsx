@@ -1,6 +1,6 @@
 import CustomButton from '@/components/CustomButton'
-import * as Contacts from 'expo-contacts'
 import { Contact } from '@/types/type'
+import * as Contacts from 'expo-contacts'
 
 interface ContactsSyncProps {
   onSuccess?: (contacts: Contact[]) => void
@@ -28,7 +28,6 @@ const ContactsSync = ({ onSuccess }: ContactsSyncProps) => {
             birthday: `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
           }
         })
-
 
       if (onSuccess) {
         onSuccess(contacts)
